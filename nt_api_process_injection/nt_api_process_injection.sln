@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nt_api_process_injection", "nt_api_process_injection.vcxproj", "{AC423068-2BFF-41C4-AD93-B0235111B5E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Debug|x64.ActiveCfg = Debug|x64
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Debug|x64.Build.0 = Debug|x64
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Debug|x86.ActiveCfg = Debug|Win32
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Debug|x86.Build.0 = Debug|Win32
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Release|x64.ActiveCfg = Release|x64
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Release|x64.Build.0 = Release|x64
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Release|x86.ActiveCfg = Release|Win32
+		{AC423068-2BFF-41C4-AD93-B0235111B5E6}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C478A0E-DE89-4F13-AB3D-9DC99D61D276}
+	EndGlobalSection
+EndGlobal
