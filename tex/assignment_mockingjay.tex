@@ -1,0 +1,69 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+%----------------------------------------------------------------------------------------
+%
+% Title Page: clear and concise
+% e.g. technical report title and module code and title, plus your name and student ID number
+%
+% Abstract Page
+%
+% Contents Page {shows structure of report - section numbers, heading andpages}
+%
+% Introduction {very brief description of
+%   aims (general) and
+%   objectives (what is done to achieve the aims to put report within context/sets the scene for thereader (e.g. where does this development fit within the field);
+%               what are theproblems/issues of the subject area}
+%
+% Body of report {main part of the report; could be divided in several sectionspending the research/discussions you undertake}
+%
+% Evaluation {evaluate the results; can be a subsection of the Body of report}
+%
+% Conclusions {condensed version of body; briefly gives key findings andfuture works}
+%
+% References (Bibliography) {demonstration of your referencing skills}
+%
+% Appendices {optional, if there is any}
+%
+%----------------------------------------------------------------------------------------
+
+\title{Your Paper}
+\author{You}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Your abstract.
+\end{abstract}
+
+\tableofcontents
+
+\input{assignment_introduction}
+
+\input{assignment_body}
+
+\input{assignment_evaluation}
+
+\input{assignment_conclusions}
+
+\bibliographystyle{alpha}
+\bibliography{assignment}
+
+\appendix
+
+\input{assignment_appendix_generating_payloads}
+
+\end{document}

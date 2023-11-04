@@ -4,6 +4,9 @@
 **/Release/*
 **/x64/*
 
+# Tmp files
+**/*~
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
