@@ -1,3 +1,9 @@
+## VS 
+**/.vs
+**/Debug/*
+**/Release/*
+**/x64/*
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
