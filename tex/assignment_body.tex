@@ -1,31 +1,8 @@
-\section{Background}
+% Section 2 is a literature review of HBCI methods and endpoint security that is typically relied upon to prevent these types of attack.  We will then look at methods a identifying these attacks and look at the likelihood of Endpoint Security products of identifying the attack.
+\input{assignment_body_literature_review}
 
-\subsection{Endpoint Security: EDR, MDR \& XDR}
+% Section 3 an investigation into the Mockingjay attack and against a recently published paper ``Procguard'' \cite{10063560} and asks weather this attack method would lickly be caught.
+\input{assignment_body_mockingjay}
 
-\href{https://www.crowdstrike.com/cybersecurity-101/endpoint-security/edr-vs-mdr-vs-xdr/}{EDR vs MDR vs XDR}
-
-
-\subsection{Code Injection Methods}
-
-\href{https://attack.mitre.org/techniques/T1055/}{T1055}
-
-\href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{process injection sharing payload}
-
-\href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
-
-\href{https://github.com/elddy/Windows-NTAPI-Injector}{NTAPI injector}
-
-\href{https://gist.github.com/WKL-Sec/96e17188e4c159c2cdf7ff2c111130cc#file-local-c}{Injector examples in C}
-
-\href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
-
-\href{https://medium.com/@s12deff/process-injection-with-random-rwx-memory-spaces-3e3651149527}{PI with random RWX memory spaces}
-
-\subsection{Introducing MockingJay}
-
-\href{https://www.securityjoes.com/post/process-mockingjay-echoing-rwx-in-userland-to-achieve-code-execution}{Mockingjay echoing in userland to achieve code execution}
-
-\href{https://www.linkedin.com/posts/john-stigerwalt-90a9b4110_mockingjay-memory-allocation-primitive-activity-7083050050158743552-Hgyw}{mockingjay memory allocation primative}
-
-\href{https://whiteknightlabs.com/2023/07/06/mockingjay-memory-allocation-primitive/}{white knights mocking jay}
-
+% Section 4 is an implementation of the attack and will look at manually identifying an infected process and generating artifacts that could be used in automating the process.
+\input{assignment_body_implementation}
