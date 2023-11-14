@@ -1,16 +1,22 @@
+
 \section{Background}
 
-\subsection{Endpoint Security: EDR, MDR \& XDR}
+\subsection{Endpoint Security: EDR}
 
+HBCI techniques work on injecting code into running processes and having that code executed as part of the normal process execution.  End-point Detection and Response (EDR) systems (\cite{Hayes:2023}) provides realtime visibiluty
 \href{https://www.crowdstrike.com/cybersecurity-101/endpoint-security/edr-vs-mdr-vs-xdr/}{EDR vs MDR vs XDR}
 
+Process injection seeks bypass EDR hooks by injecting code into trusted processes with RWX permissions already set.
 
 \subsection{Code Injection Methods}
 
 Talk about Mitre process injection tech T1055 \cite{Mitre:2017}
 
-Talk about 
-\href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{Process injection sharing payload}
+\subsubsection{Deploying Payload into Windows Memory Space}
+
+% \href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{Process injection sharing payload}
+
+(\cite{Zhan:2018})
 
 \href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
 
