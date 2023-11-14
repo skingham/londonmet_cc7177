@@ -9,6 +9,10 @@
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
+\usepackage[backend=biber, sorting=nyt, style=apa]{biblatex}
+\let\cite\textcite
+
+\usepackage[outputdir=pdf]{minted}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
@@ -39,8 +43,11 @@
 %
 %----------------------------------------------------------------------------------------
 
+
+\addbibresource{references.bib}
+
 \title{Your Paper}
-\author{You}
+\author{Stuart Kingham}
 
 \begin{document}
 \maketitle
@@ -59,8 +66,9 @@ Your abstract.
 
 \input{assignment_conclusions}
 
-\bibliographystyle{alpha}
-\bibliography{assignment}
+%\bibliographystyle{alpha}
+%\bibliography{references}
+\printbibliography
 
 \appendix
 
