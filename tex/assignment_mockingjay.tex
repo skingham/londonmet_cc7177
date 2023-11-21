@@ -1,21 +1,20 @@
 \documentclass{article}
 
-% Language setting
-% Replace `english' with e.g. `spanish' to change the document language
 \usepackage[english]{babel}
-
-% Set page size and margins
-% Replace `letterpaper' with`a4paper' for UK/EU standard size
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
-\usepackage[backend=biber, sorting=nyt, style=apa]{biblatex}
-\let\cite\textcite
-
-\usepackage[outputdir=pdf]{minted}
+\usepackage[backend=biber, sorting=nyt, style=authoryear-ibid]{biblatex}
 \usepackage{amsmath}
+\usepackage{csquotes}
 \usepackage{graphicx}
+\graphicspath{ {figures/} }
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{parskip}
+\usepackage{multirow}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage[outputdir=pdf]{minted}
 
 %----------------------------------------------------------------------------------------
 %
@@ -43,17 +42,18 @@
 %
 %----------------------------------------------------------------------------------------
 
-
+%\bibliography{references}
 \addbibresource{references.bib}
 
-\title{Your Paper}
+\title{Can Mockingjay Hide from Current EDRs?}
 \author{Stuart Kingham}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Your abstract.
+  In this report we review a modern Windows process injection attack and ask how
+  able is the attack at evading current Endpoint Detection Systems.
 \end{abstract}
 
 \tableofcontents
@@ -62,12 +62,12 @@ Your abstract.
 
 \input{assignment_body}
 
+\pagebreak
+
 \input{assignment_evaluation}
 
 \input{assignment_conclusions}
 
-%\bibliographystyle{alpha}
-%\bibliography{references}
 \printbibliography
 
 \appendix

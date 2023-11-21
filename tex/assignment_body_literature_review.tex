@@ -1,22 +1,50 @@
 
+% Outline
+
+
+
 \section{Background}
+
+
+End-point Detection and Response Systems (EDR) have developed to counter these myriad threats.  These systems are gaining in sophistication and adversaries
+are on the hunt for new ways to evade these systems.
+
+In this report we look at a new variation of one attack technique, process injection, and ask how EDRs protect against these attacks and how
+this new technique would evade those barriers.  In particular we are looking at the ``Mockingjay'' attach that targets modern Windows machines.
+
+EDRs incorporate protections of increasing levels of sophistication.
+
+At the first level there are static monitoring of specific machine DLLs and processes to detect changes.  Making sure that certain subsystems
+have not been modified, had elevated permissions, or unknown processes running on the monitored system.  Signature based
+
+Next, user and entity behaviour analytics (EUBA) tools identify changes in behaviours that could indicate a threat.  This could include the
+applications and systems a user normally uses, looking for configuration changes, and scanning log files for changes in behaviour.
+
+Statistical modeling will profile normal activity and continuous monitoring will attempt to descern anomolous behaviour as a threat occurs.
+
+Anomaly detection can be prone to false positives.  The threat actor will look for attacks that could look like inocent behavior.
+
+These protections can be signatu
+
+
 
 \subsection{Endpoint Security: EDR}
 
-HBCI techniques work on injecting code into running processes and having that code executed as part of the normal process execution.  End-point Detection and Response (EDR) systems (\cite{Hayes:2023}) provides realtime visibiluty
-\href{https://www.crowdstrike.com/cybersecurity-101/endpoint-security/edr-vs-mdr-vs-xdr/}{EDR vs MDR vs XDR}
+% \href{https://www.crowdstrike.com/cybersecurity-101/endpoint-security/edr-vs-mdr-vs-xdr/}{EDR vs MDR vs XDR}
+HBCI techniques work on injecting code into running processes and having that code executed as part of the normal process
+execution.  End-point Detection and Response (EDR) systems \autocite{Hayes:2023} provides realtime visibiluty
 
 Process injection seeks bypass EDR hooks by injecting code into trusted processes with RWX permissions already set.
 
 \subsection{Code Injection Methods}
 
-Talk about Mitre process injection tech T1055 \cite{Mitre:2017}
+Talk about Mitre process injection tech T1055 \autocite{Mitre:2017}
 
 \subsubsection{Deploying Payload into Windows Memory Space}
 
 % \href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{Process injection sharing payload}
 
-(\cite{Zhan:2018})
+\autocite{Zhan:2018}
 
 \href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
 

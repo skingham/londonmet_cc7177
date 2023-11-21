@@ -1,14 +1,26 @@
 \section{Introduction}
 
-Host-based code injection attack (HBCIA) techniques (\cite{6999410}) continue to evolve since a method to map an external module into a target process by Microsoft (\cite{Ghizzoni:2004}) was published, to support applications such as ``anti-virus programs, profilers, debuggers, and pseudo-localization testing'', and quickly used by malicious actors to insert DLLs into target processes (\cite{4420399}).
+% how does this assignment relate to cyber-security
 
-A cat-and-mouse game beween security groups on the one hand, and the evasion and increased sophistication and novelty on the part of malicious actors on the other.  \textit{need to introduct reinforcement techniques used by endpoint security.} 
+It only takes a a few minutes for a new exploit to be found to get access to a companies computing assets \textit{find and cite the recent citrix bug that allowed an attacker to kick a user of their session and gain access}.
 
-Recently a new host-base code injection (HBCI) method targeting the code sections with Read Write eXecute (RWX)  \textit{(include more detail here)} was identified by researchers (\cite{Peixoto:2023}).  This report is a review of this technique and an overview of this class of attacks.
+From social engineering a user to click on a nefarious link \textit{find an example exploit} or opening a spreadsheet \textit{put in example of process injection in an Excel macro}, there's rich pickings for an attacker to target a system.
+
+For organisations with assets that threat actors want to attack, \href{https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-165a}{understand these groups and their techniques} and \href{https://www.cshub.com/attacks/articles/five-active-ransomware-gangs-and-their-tactics-part-one}{tactics} are a vital part of an organisation's cyber-security education and defence.
+
+A cat-and-mouse game beween security groups on the one hand, and the evasion and increased sophistication and novelty on the part of malicious actors on the other.  \textit{need to introduce reinforcement techniques used by endpoint security.} 
+
+For vendors of XDR solutions investigating existing and emerging threats is an on-going process to a\href{https://research.tue.nl/files/305661196/Olteanu_I.C..pdf}{evaluating the response effectiveness of their XDR technology}.
+
+Terminology \ldots Host-based code injection attack (HBCIA) techniques \autocite{Barabosch:2014} continue to evolve since a method to map an external module into a target process by Microsoft \autocite{Ghizzoni:2004} was published, to support applications such as ``anti-virus programs, profilers, debuggers, and pseudo-localization testing'', and quickly used by malicious actors to insert DLLs into target processes \autocite{Jang:2007}.
+
+Recently a new host-base code injection (HBCI) method targeting the code sections with Read Write eXecute (RWX)  \textit{(include more detail here)} was identified by researchers \autocite{Peixoto:2023}.  This report is a review of this technique and an overview of this class of attacks.
+
+This paper reports on a new process injection technique \autocite{Peixoto:2023} in relation to the protections offered by EDR and XDR technologies, and specifically with behaviours that could be used to detect API attacks \autocite{Wang:2022}.  We will analyse the ``Mockingjay'' attack and identify the defences offered by modern XDR systems and ask if there's a credible chance of evading detection.  By looking at an implementation of the attack we will ask in what ways a threat detection system strengthen it's defences, and what artifacts could be automatically produced that could demonstrate any anomoly in a systems behaviour. 
 
 Section 2 is a literature review of HBCI methods and endpoint security that is typically relied upon to prevent these types of attack.  We will then look at methods a identifying these attacks and look at the likelihood of Endpoint Security products of identifying the attack.
 
-Section 3 an investigation into the Mockingjay attack and against a recently published paper ``Procguard'' \cite{10063560} and asks weather this attack method would lickly be caught.
+Section 3 an investigation into the Mockingjay attack and against a recently published paper ``Procguard'' \autocite{Wang:2022} and asks weather this attack method would lickly be caught.
 
 % {jwang,mcj123,ZiangLi,2018302180148,iwangjye}@whu.edu.cn
 
@@ -16,4 +28,4 @@ Section 4 is an implementation of the attack and will look at manually identifyi
 
 Section 5 is an evaluation section, reflecting on the project.
 
-Section 7 is the conclusion and will suggest further research that could be undertaken to use reinforcement to identify ``RWX'' code injection.
+Section 6 is the conclusion and will suggest further research that could be undertaken to use reinforcement to identify ``RWX'' code injection.
