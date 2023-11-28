@@ -1,24 +1,43 @@
 \section{Introduction}
 
-% how does this assignment relate to cyber-security
+% Establish the teritory, the importance and reviewing previous work. how does this assignment relate to cyber-security
 
-It only takes a a few minutes for a new exploit to be found to get access to a companies computing assets \textit{find and cite the recent citrix bug that allowed an attacker to kick a user of their session and gain access}.
+The life of a cyber-security professional can be a thankless task at times. Even with cyber-security spend increasing as a percentage of IT budgets \autocite{Hiscox:2022},
+boards are reporting that they are not seeing eye-to-eye with their CISOs where \enquote{65\% of board members think their organization is at risk of a material
+  cyberattack, only 48\% of CISOs share that view.} and that this \enquote{communication gap and board-CISO misalignment hinders progress in cybersecurity}
+\autocite{Milica:2023}.
 
-From social engineering a user to click on a nefarious link \textit{find an example exploit} or opening a spreadsheet \textit{put in example of process injection in an Excel macro}, there's rich pickings for an attacker to target a system.
 
-For organisations with assets that threat actors want to attack, \href{https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-165a}{understand these groups and their techniques} and \href{https://www.cshub.com/attacks/articles/five-active-ransomware-gangs-and-their-tactics-part-one}{tactics} are a vital part of an organisation's cyber-security education and defence.
+It only takes a a few minutes for a new exploit to be found to get access to a companies computing assets.  Citrix recently reported a Netscaler Gateway code injection
+vulnerability, \autocite{CVE-2023-3519}, as well as a privilege escalation attack \autocite{CVE-2023-3467}.  These are examples of novel attack vectors that  are
+completely different to the normal social engineering attacks that corporate users are regularly trained to look for and avoid.  While protecing against a users of
+email systems on clicking on a nefarious URL link, or opening a spreadsheet, there's rich buffet of choices, new and old, for an attacker to pick from when target
+targeting a corporation's assets.
 
-A cat-and-mouse game beween security groups on the one hand, and the evasion and increased sophistication and novelty on the part of malicious actors on the other.  \textit{need to introduce reinforcement techniques used by endpoint security.} 
+For organisations with assets that threat actors want to attack, it's necessary to at a minimum keep abreast of both reported Common Vulnerability and Exposures (CVE)
+security flaws of their systems, published by NIST and MITRE, and reviewing advisories such as those issued by the Cybersecurity and Infrastructure Security Agency (CISA)
+as ongoing cybersecurity education about groups such as ransomware gangs and their techniques \autocite{CISA:2023}.
 
-For vendors of XDR solutions investigating existing and emerging threats is an on-going process to a\href{https://research.tue.nl/files/305661196/Olteanu_I.C..pdf}{evaluating the response effectiveness of their XDR technology}.
+% \href{https://www.cshub.com/attacks/articles/five-active-ransomware-gangs-and-their-tactics-part-one}{tactics} are a vital part of an organisation's cyber-security education and defence.
 
-Terminology \ldots Host-based code injection attack (HBCIA) techniques \autocite{Barabosch:2014} continue to evolve since a method to map an external module into a target process by Microsoft \autocite{Ghizzoni:2004} was published, to support applications such as ``anti-virus programs, profilers, debuggers, and pseudo-localization testing'', and quickly used by malicious actors to insert DLLs into target processes \autocite{Jang:2007}.
+This cat-and-mouse game beween security groups on the one hand, and the evasion and increased sophistication and novelty on the part of malicious actors on the other \ldots
+\textit{introduce EDR} \ldots
+For vendors of EDR, MDR \& XDR solutions investigating existing and emerging threats is an on-going process \href{https://research.tue.nl/files/305661196/Olteanu_I.C..pdf}{evaluating the response effectiveness of their XDR technology}.
 
-Recently a new host-base code injection (HBCI) method targeting the code sections with Read Write eXecute (RWX)  \textit{(include more detail here)} was identified by researchers \autocite{Peixoto:2023}.  This report is a review of this technique and an overview of this class of attacks.
+% Identify a niche, indicating a gap in in knowledge
 
-This paper reports on a new process injection technique \autocite{Peixoto:2023} in relation to the protections offered by EDR and XDR technologies, and specifically with behaviours that could be used to detect API attacks \autocite{Wang:2022}.  We will analyse the ``Mockingjay'' attack and identify the defences offered by modern XDR systems and ask if there's a credible chance of evading detection.  By looking at an implementation of the attack we will ask in what ways a threat detection system strengthen it's defences, and what artifacts could be automatically produced that could demonstrate any anomoly in a systems behaviour. 
+Relying on EDR systems as a principle defence against a myriad of attacks alieviates many problems.  But it does not alievate the communication gap between company boards
+and the cyber and information security professionals that protect their organisation.  CISOs need to understand the threat landscape, their mitigants to attacks, and
+where failures in their own security systems may fail.  Having new internal analysis and being fully abreast of the threats, vulnerabilities and mitigants of their
+systems will equip our CISO with the information they need to formulate and communicate a set of action/response readiness to the senior executives and board members. 
 
-Section 2 is a literature review of HBCI methods and endpoint security that is typically relied upon to prevent these types of attack.  We will then look at methods a identifying these attacks and look at the likelihood of Endpoint Security products of identifying the attack.
+% Occupy the niche; purpose of new research, listing questions, the value of the work and the structure of the writing
+
+This paper is a model for the types of analysis that a CISO should be requesting from their information security teams.  This paper reports on a new process injection technique \autocite{Peixoto:2023} in relation to the protections offered by EDR and XDR technologies, and specifically with behaviours that could be used to detect API attacks \autocite{Wang:2022}.
+
+We will analyse the ``Mockingjay'' attack and identify the defences offered by modern XDR systems and ask if there's a credible chance of evading detection.  By looking at an implementation of the attack we will ask in what ways a threat detection system strengthen it's defences, and what artifacts could be automatically produced that could demonstrate any anomoly in a systems behaviour. 
+
+Section 2 is a literature review of process injection attacks and endpoint security that is typically relied upon to prevent these types of attack.  We will then look at methods a identifying these attacks and look at the likelihood of Endpoint Security products of identifying the attack.
 
 Section 3 an investigation into the Mockingjay attack and against a recently published paper ``Procguard'' \autocite{Wang:2022} and asks weather this attack method would lickly be caught.
 
@@ -28,4 +47,5 @@ Section 4 is an implementation of the attack and will look at manually identifyi
 
 Section 5 is an evaluation section, reflecting on the project.
 
-Section 6 is the conclusion and will suggest further research that could be undertaken to use reinforcement to identify ``RWX'' code injection.
+Section 6 is the conclusion and will suggest risks and mitigants for process injection attacks and further research that could be undertaken to use reinforcement to identify ``RWX'' code injections that should be part of a corporations EDR solution.
+

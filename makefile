@@ -9,20 +9,21 @@ PDF_FILES := $(BUILDDIR)/assignment_mockingjay.pdf $(BUILDDIR)/literature_review
 
 
 LATEX_INTERMEDIATE := $(BUILDDIR)/
+TEXINPUTS:="./tex/:"
 
 .PHONY: clean clean-bcf
 
 $(BUILDDIR)/%.bcf: $(TEXDIR)/%.tex
-	TEXINPUTS=".//tex//:" ; $(LATEX) -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
+	TEXINPUTS="./tex/:" ; $(LATEX) -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
 
 $(BUILDDIR)/%.bbl: $(BUILDDIR)/%.bcf $(TEXDIR)/references.bib
 	biber --input-directory $(TEXDIR) $<
 
 $(BUILDDIR)/%.toc: $(TEXDIR)/%.tex
-	TEXINPUTS=".//tex//:" ; $(LATEX) -synctex=0 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
+	TEXINPUTS="./tex/:" ; $(LATEX) -synctex=0 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
 
 $(BUILDDIR)/%.pdf: $(TEXDIR)/%.tex $(BUILDDIR)/%.bbl $(BUILDDIR)/%.toc $(TEX_FILES)
-	TEXINPUTS=".//tex//:" ; $(LATEX) -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
+	TEXINPUTS="./tex/:" ; $(LATEX) -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
 
 $(BUILDDIR):
 	mkdir $(BUILDDIR)
