@@ -3,13 +3,13 @@ BUILDDIR := pdf
 TEXDIR := tex
 
 # ASSIGNMENT_TEXS := $(addprefix $(TEXDIR)/,assignment_introduction.tex assignment_body.tex assignment_body_literature_review.tex assignment_body_mockingjay.tex assignment_body_implementation.tex code/mockingjay.cpp assignment_evaluation.tex assignment_conclusions.tex references.bib assignment_appendix_generating_payloads.tex)
-TEX_FILES := $(addprefix $(TEXDIR)/,assignment_*.tex references.bib)
+TEX_FILES := $(addprefix $(TEXDIR)/,assignment_*.tex)
 
 PDF_FILES := $(BUILDDIR)/assignment_mockingjay.pdf $(BUILDDIR)/literature_review.pdf
 
 
 LATEX_INTERMEDIATE := $(BUILDDIR)/
-TEXINPUTS:="./tex/:"
+TEXINPUTS:="./tex/"
 
 .PHONY: clean clean-bcf
 
