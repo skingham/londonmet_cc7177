@@ -50,6 +50,7 @@ Cite using:
 
 \textbf{\citetitle{Milica:2023}}: \textcite{Milica:2023}.
 
+Headlines increasingly highlight the consequences of poor cybersecurity practices. Board members with cybersecurity experience are trying to get their fellow members’ attention on it. And board members want to provide oversight, even though they just don’t have the right questions to ask. Boards need to discuss their organization’s cybersecurity-induced risks and evaluate plans to manage those risks. With the right conversations about keeping the company resilient, they can take the next step to provide adequate cybersecurity oversight.
 
 \subsection{Are we spending enough}
 
@@ -100,6 +101,13 @@ Their starting point is a HBCIA \textit{check assumption that the attack is a ho
 
 \textbf{\citetitle{Ghizzoni:2004}}: \textcite{Ghizzoni:2004} MS Patent.
 
+Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
+
+For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
+
+Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
+
+For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
 
 \subsubsection{Legal adapted from malware techniques}
 
@@ -126,6 +134,12 @@ Differentiate between HBCI and HBCIA, HBCI \& RBCI.
 
 \subsubsection{\citetitle{Mitre:2017}}
 \textcite{Mitre:2017}
+
+Adversaries may inject code into processes in order to evade process-based defenses as well as possibly elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process. 
+
+There are many different ways to inject code into a process, many of which abuse legitimate functionalities. These implementations exist for every major OS but are typically platform specific. 
+More sophisticated samples may perform multiple process injections to segment modules and further evade detection, utilizing named pipes or other inter-process communication (IPC) mechanisms as a communication channel. 
+
 
 \citetitle{Oosthoek:2019}
 
@@ -300,7 +314,26 @@ Differentiate between HBCI and HBCIA, HBCI \& RBCI.
 
 \textbf{\citetitle{Zhan:2018}}: \textcite{Zhan:2018}
 
+The purpose of this post is to discuss deploying the payload into the memory space of a target process for execution. One can use conventional Win32 API for this task that some of you will already be familiar with, but there’s also the potential to be creative using unconventional approaches. For example, we can use API to perform read and write operations they weren’t originally intended for and that might help evade detection.
+
+There are various ways to deploy and execute a payload, but not all are simple to use. Let’s first focus on the conventional API that despite being relatively easy to detect are still popular among threat actors.
+Below is a screenshot of VMMap from sysinternals showing the types of memory allocated for the system I’ll be working on (Windows 10). Some of this memory has the potential to be used for storage of a payload.
+
 \textbf{\citetitle{Dequeker:2023}}: \textcite{Dequeker:2023}
+
+Process injection is a family of malware development techniques allowing an attacker to execute a malicious payload into legitimate addressable memory space of a legitimate process.
+These techniques are interesting because the malicious payload is executed by a legitimate process that could be less inspected by a security product such as an EDR.
+However, in order to perform this injection, the attacker needs to use specific functions for memory allocation, and use execution primitives to write and execute his payload in the remote process. In standard process injection patterns, these functions are usually the following Win32API: VirtuallAllocEx, WriteProcessMemory and CreateRemoteThread.
+ 
+Security products can use this the mandatory use of this type of functions to detect and fight against process injection by monitoring these API calls. Therefore, in order to keep this type of technique viable, attackers must find other ways to allocate, write and execute memory in a remote process.
+This post aims to show an alternate technique allowing execution at an arbitrary memory address on a remote process that can be used to replace the standard CreateRemoteThread call.
+
+
+\begin{figure}[h]
+\includegraphics[scale=0.9]{dequeker_standard_process_injection_pattern.png}
+\caption{Standard process Injection pattern \autocite{Dequeker:2023}}
+\end{figure}
+ 
 
 \textbf{\citetitle{S12h4ck:2023a}}: \textcite{S12h4ck:2023a}
 
@@ -309,6 +342,11 @@ Differentiate between HBCI and HBCIA, HBCI \& RBCI.
 \href{https://gist.github.com/WKL-Sec/96e17188e4c159c2cdf7ff2c111130cc#file-local-c}{GitHub.com Injector examples in C}
 
 \textbf{\citetitle{S12h4ck:2023b}}: \textcite{S12h4ck:2023b}
+
+So, picture this: you’re in a digital realm where security is paramount, and there’s an ongoing battle between the good guys and the cyber-criminals. Process injection is like a ninja move in this digital showdown, and these “random RWX memory spaces” are the secret hideouts where the action unfolds.
+
+This C++ code appears to be a Windows application that performs process injection using a specific shellcode into processes that have memory regions marked as PAGE_EXECUTE_READWRITE. Process injection is a technique used in various scenarios, including security research and, unfortunately, malicious activities.
+
 
 \href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
 
@@ -337,6 +375,45 @@ Auditing, a central pillar of operating system security, has only recently come 
 \subsection{Endpoint Security: EDR}
 
 \textbf{\citetitle{Hayes:2023}} \textcite{Hayes:2023}
+
+Endpoint detection and response (EDR) is a cybersecurity solution that captures all endpoint activity and leverages advanced analytics to provide real-time visibility into the health of all endpoints; detect anomalous activity; alert the information security (Infosec) team to events; and provide remediation suggestions and capabilities to respond, stop an attack in progress or limit its spread.
+Endpoint detection and response solutions have the following capabilities:
+
+\begin{itemize}
+\item	Endpoint monitoring and event recording
+\item	Data search, investigation and threat hunting
+\item	Alert triage or suspicious activity validation
+\item	Suspicious activity detection
+\item	Data analysis
+\item	Actionable intelligence to support response
+\item	Remediation
+\end{itemize}
+
+Managed detection and response (MDR) is endpoint security “as a service.” This  service manages endpoint security technologies for organizations which includes EDR. Service capabilities typically include: :
+
+\begin{itemize}
+\item	Continuous monitoring
+\item	Threat hunting
+\item	Prioritization of threats and alerts
+\item	Managed investigation services
+\item	Guided response
+\item	Managed remediation
+\end{itemize}
+
+The main benefit of MDR is that it helps rapidly identify and limit the impact of threats without the need for additional staffing. This is especially important given the global shortage of highly skilled cybersecurity professionals and the related skills gap, particularly as it relates to protection of cloud-based systems and assets.
+
+Extended detection and response (XDR) streamlines security data ingestion, analysis and workflows across an organization’s entire security stack, enhancing visibility around hidden and advanced security threats and unifying the response.
+
+An XDR platform collects and correlates data from across the infrastructure so it can improve threat visibility across the enterprise, accelerate security operations and reduce risk. XDR analyzes, prioritizes and streamlines this data, so it can be delivered to security teams in a normalized format through a single, consolidated console.
+XDR platforms typically offer the following capabilities:
+
+\begin{itemize}
+\item	Diverse, multi-domain security telemetry
+\item	Threat-focused event analysis
+\item	Threat detection and prioritization of data fidelity
+\item	Data search, investigation and threat hunting across multi-domain telemetry
+\item	Response to mitigate and remediate the threat
+\end{itemize}
 
 \subsection{What is on offer and where are EDRs failing}
 
@@ -393,6 +470,9 @@ The Mockingjay  attack targets trusted and legitimate processes runing on a syte
 technique utilised byattackers to deceive robust security products in a corporate environment, such as ``EDRS'' and \textbf{XDRS}.
 
 Process is designed to bypass security controls to gain unauthorised access.
+
+Throughout the blog post, we will delve into various process injection techniques employed by attackers to bypass security controls and gain unauthorized access. We will address the challenges presented by EDRs and XDRs, emphasizing the importance of understanding and mitigating the risks associated with process injection. Additionally, we will share insights gained from our research, including the development of our own process injection technique. We will highlight the capabilities and implications of this technique, shedding light on its effectiveness, potential impact and detection opportunities for defenders.
+
 
 \section{Figures}
 

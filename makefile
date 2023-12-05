@@ -7,11 +7,12 @@ TEX_FILES := $(addprefix $(TEXDIR)/,assignment_*.tex)
 
 PDF_FILES := $(BUILDDIR)/assignment_mockingjay.pdf $(BUILDDIR)/literature_review.pdf
 
-
 LATEX_INTERMEDIATE := $(BUILDDIR)/
 TEXINPUTS:="./tex/"
 
 .PHONY: clean clean-bcf
+.PRECIOUS:= $(BUILDDIR)/%.bcf
+
 
 $(BUILDDIR)/%.bcf: $(TEXDIR)/%.tex
 	TEXINPUTS="./tex/:" ; $(LATEX) -synctex=1 -interaction=nonstopmode --shell-escape -output-directory=$(BUILDDIR) $<
