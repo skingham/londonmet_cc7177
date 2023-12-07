@@ -12,11 +12,32 @@
 \usepackage{parskip}
 \usepackage{setspace}
 \doublespacing
+\usepackage{multicol}
 \usepackage{multirow}
 \usepackage{fontspec}
 \usepackage{fontawesome5}
 \usepackage{amsmath}
 \usepackage{csquotes}
+
+% Document style
+%\usepackage[utf8]{inputenc} % Required for inputting international characters
+%\usepackage[T1]{fontenc} % Output font encoding for international characters
+%\usepackage{palatino} % Use the Palatino font
+%\usepackage{microtype} % Improves spacing
+%\usepackage[bf,sf,center]{titlesec} % Required for modifying section titles - bold, sans-serif, centered
+%\usepackage{fancyhdr} % Required for modifying headers and footers
+%\fancyhead[L]{\textsf{\rightmark}} % Top left header
+%\fancyhead[R]{\textsf{\leftmark}} % Top right header
+%\renewcommand{\headrulewidth}{1.4pt} % Rule under the header
+%\fancyfoot[C]{\textbf{\textsf{\thepage}}} % Bottom center footer
+%\renewcommand{\footrulewidth}{1.4pt} % Rule under the footer
+%\pagestyle{fancy} % Use the custom headers and footers throughout the document
+
+% Appendix dictionary template: print each word on the page
+% \markboth{}{} prints the first word on the page in the top left header and the last word in the top right
+%\newcommand{\entry}[4]{\markboth{#1}{#1}\textbf{#1}\ {(#2)}\ \textit{#3}\ $\bullet$\ {#4}}
+\newcommand{\entry}[2]{\markboth{#1}{#1}\textbf{#1}\ $\bullet$\ {#2}}
+
 
 %----------------------------------------------------------------------------------------
 %
@@ -51,6 +72,7 @@
 \author{Stuart Kingham}
 
 \begin{document}
+
 \maketitle
 
 \begin{abstract}
@@ -62,7 +84,13 @@
   ask how well EDRs are able to thwart attacks and highlight the risks of an attack evading an Endpoint Detection System.
 \end{abstract}
 
+\newpage
 \tableofcontents
+\listoffigures
+\listoftables
+\pagenumbering{roman}
+\pagenumbering{arabic}
+\newpage
 
 \input{assignment_introduction}
 
@@ -83,6 +111,8 @@
 \appendix
 
 \input{assignment_appendix_generating_payloads}
+
+\input{assignment_appendix_terminology.tex}
 
 \end{document}
 

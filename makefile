@@ -11,7 +11,7 @@ LATEX_INTERMEDIATE := $(BUILDDIR)/
 TEXINPUTS:="./tex/"
 
 .PHONY: clean clean-bcf
-.PRECIOUS:= $(BUILDDIR)/%.bcf
+.PRECIOUS:= $(BUILDDIR)/%.bcf $(BUILDDIR)/%.bbl $(BUILDDIR)/%.toc
 
 
 $(BUILDDIR)/%.bcf: $(TEXDIR)/%.tex

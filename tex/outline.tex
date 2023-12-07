@@ -1,0 +1,255 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage[backend=biber, sorting=nyt, style=authoryear-ibid]{biblatex}
+\usepackage[outputdir=pdf]{minted}
+\usepackage{graphicx}
+\graphicspath{ {figures/} }
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{parskip}
+\usepackage{setspace}
+\doublespacing
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage{csquotes}
+
+\newcommand{\outlinecite}[1]{\citetitle{#1} \textcite{#1}}
+%----------------------------------------------------------------------------------------
+%
+% Title Page: clear and concise
+% e.g. technical report title and module code and title, plus your name and student ID number
+%
+% Abstract Page
+%
+% Contents Page {shows structure of report - section numbers, heading andpages}
+%
+% Introduction {very brief description of
+%   aims (general) and
+%   objectives (what is done to achieve the aims to put report within context/sets the scene for thereader (e.g. where does this development fit within the field);
+%               what are theproblems/issues of the subject area}
+%
+% Body of report {main part of the report; could be divided in several sectionspending the research/discussions you undertake}
+%
+% Evaluation {evaluate the results; can be a subsection of the Body of report}
+%
+% Conclusions {condensed version of body; briefly gives key findings andfuture works}
+%
+% References (Bibliography) {demonstration of your referencing skills}
+%
+% Appendices {optional, if there is any}
+%
+%----------------------------------------------------------------------------------------
+
+\addbibresource{references.bib}
+
+\title{Can Mockingjay Evade your CISO: A Review of Current Process Injection Attacks}
+\author{Stuart Kingham}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+  CISOs and boards are not commuicating well with divergent views on the risk of cyber-attacks.
+  CISOs should regularly be asking their information security teams to perform risk assessments and mitigation reports that can be used to
+  communicate to senior executives and boards on the specific threats to an organisation. 
+  In this report we ask if modern End-point Detection Systems (EDR) can provide blanket protection from attacks and what a CISO should be asking from
+  their vendors and how attacks can be mitigated.  We review process injection attacks and perform a deep dive review of a modern Windows attack.  We
+  ask how well EDRs are able to thwart attacks and highlight the risks of an attack evading an Endpoint Detection System.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\pagenumbering{roman}
+\pagenumbering{arabic}
+
+\newpage
+\section{Introduction}
+
+\outlinecite{Milica:2023}
+
+\outlinecite{Hiscox:2022}
+
+
+\subsection{CISO Challenges in Cybersecurity Oversight by Boards}
+
+\begin{enumerate}
+\item Disconnect Between Boards and CISOs:
+     \begin{itemize}
+        \item Limited alignment between boards and CISOs.
+        \item Insufficient interaction hindering meaningful cybersecurity discussions.
+        \item Communication gaps and misalignment impeding progress in cybersecurity.
+     \end{itemize}
+ 
+\item Focus on Protection Over Resilience:
+     \begin{itemize}
+        \item Boards prioritizing cyber protection despite a high perceived risk.
+        \item Investments in protection not directed to critical areas.
+        \item Advocacy for a shift towards organizational resilience.
+     \end{itemize}
+ 
+\item Cybersecurity as a Technical Topic:
+     \begin{itemize}
+        \item Boards viewing cybersecurity primarily as a technical issue.
+        \item Limited time in board meetings making it challenging to address nuances.
+        \item Need for a shift from technical to management challenges in discussions.
+     \end{itemize}
+ 
+\item Board Composition and Expertise:
+     \begin{itemize}
+        \item Many boards lacking cybersecurity expertise.
+        \item SEC proposing explicit cybersecurity recommendations for boards.
+        \item Necessity for board composition changes to incorporate cybersecurity knowledge.
+     \end{itemize}
+ 
+\item Priority and Commitment:
+     \begin{itemize}
+        \item A quarter of boardrooms not viewing cybersecurity as a priority.
+        \item Inadequate frequency of cybersecurity discussions.
+        \item The necessity of making cybersecurity a continuous priority with ongoing commitment.
+     \end{itemize}
+\end{enumerate}
+
+Organisations are clearly spending more on cyber-security.  Financial damage is going up. But the HBR report highlights a focus on prevention rather than resiliency.
+
+
+\subsection{The CISO and current state of malware attacks on Windows.}
+
+\textbf{Importance of addressing issues in cybersecurity oversight by boards}.
+
+\outlinecite{CISA:2023a}:  hijacking legitimate user sessions to generate and execute DLL code in a power shell session
+
+\outlinecite{CVE-2023-3519}: Citrix Netscaler Gateway products vulnerability to launch an unathenitcated remote code expoilt
+
+\outlinecite{CVE-2023-3467}: as well as a privilege escalation attack.
+
+Not email phishind, these are examples of novel attack vectors that  are completely different to the normal social engineering attacks that corporate users are regularly trained to look for and avoid.  While protecing against a users of  email systems on clicking on a nefarious URL link, or opening a spreadsheet, there's rich buffet of choices, new and old, for an attacker to pick from when target targeting a corporation's assets.
+as ongoing cybersecurity education about 
+
+\outlinecite{CISA:2023}L Resilience not protection; playbooks ; understanding groups such as ransomware gangs and their techniques.
+
+Relying on EDR systems as a principle defence against a myriad of attacks alieviates many problems.  But it does not alievate the communication gap between company boards
+
+
+\subsection{Introducing Mockingjay: Importance of understanding process injection techniques.}
+
+\outlinecite{Peixoto:2023}: a new process injection technique.
+
+\outlinecite{Wang:2022}: in relation to the protections offered by EDR and XDR technologies, and specifically with behaviours that could be used to detect API attacks.
+
+
+\subsection{Purpose of the report: proposing a strategic enhancement for CISOs.}
+
+This paper is a model for the types of analysis that a CISO should be requesting from their information security teams.
+
+
+\pagebreak
+%Section 2
+\section{Process Injection Techniques as Malware Attacks on Windows}
+
+\outlinecite{Barabosch:2014}
+
+\outlinecite{Ghizzoni:2004}
+
+\outlinecite{Jang:2007}
+
+\subsection{Code Injection Methods}
+
+\outlinecite{Mitre:2017}
+
+\subsection{Notable malware incidents on Windows platforms}
+
+\subsection{Definition and classification of malware; Overview of process injection}
+
+\subsection{Common vectors for malware distribution and use by Common process injection techniques}
+
+\subsection{Use cases for process injection in malware}
+
+\subsubsection{Evading detection}
+
+\subsubsection{Privilege escalation}
+
+\subsubsection{Payload delivery and execution}
+
+\subsubsection{Deploying Payload into Windows Memory Space}
+
+\outlinecite{Zhan:2018}
+
+\href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
+
+\href{https://github.com/elddy/Windows-NTAPI-Injector}{NTAPI injector} 
+
+\href{https://gist.github.com/WKL-Sec/96e17188e4c159c2cdf7ff2c111130cc#file-local-c}{Injector examples in C}
+
+\href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
+
+\href{https://medium.com/@s12deff/process-injection-with-random-rwx-memory-spaces-3e3651149527}{PI with random RWX memory spaces}
+
+\subsection{Detection and Mitigation}
+
+\subsubsection{Current strategies for detecting process injection}
+
+\subsubsection{Anti-malware tools and techniques}
+
+\subsubsection{Best practices for preventing and mitigating process injection attacks}
+
+\section{EDRs Response to an Evolving Threat Landscape}
+
+\outlinecite{Hayes:2023}
+
+\subsection{Emerging trends in malware attacks on Windows}
+
+\subsection{Advancements in process injection techniques}
+
+\subsection{Future predictions for the evolution of these threats}
+
+
+
+\pagebreak
+%\section{Proess Injection Attack and EDR Repsonse Primer}
+\section{Case Study: Introducing MockingJay; New Process Injection Attacks}
+
+
+\href{https://www.securityjoes.com/post/process-mockingjay-echoing-rwx-in-userland-to-achieve-code-execution}{Mockingjay echoing in userland to achieve code execution}
+
+\href{https://www.linkedin.com/posts/john-stigerwalt-90a9b4110_mockingjay-memory-allocation-primitive-activity-7083050050158743552-Hgyw}{mockingjay memory allocation primative}
+
+\href{https://whiteknightlabs.com/2023/07/06/mockingjay-memory-allocation-primitive/}{white knights mocking jay}
+
+
+% \subsection{Real-world examples of malware employing process injection on Windows}
+\subsection{Detailed analysis of new process injection attacks.}
+
+\subsection{Examination of how these attacks could potentially evade an organization's EDR system.}
+
+% \subsection{Analysis of the impact and consequences of these incidents}
+\subsection{Significance of the use case in assessing and improving the organization's cybersecurity measures.}
+
+\textbf{\textcite{Inam:2023}: Provenance-based system auditing and how it could improve EDR malware detection}
+
+
+\pagebreak
+\section{So How Hard is this Anyway?  Attack!}
+
+\subsection{Inoculation: Generating artifacts}
+
+
+
+\pagebreak
+\section{Conclusion}
+
+\pagebreak
+\printbibliography
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

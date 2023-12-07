@@ -7,12 +7,65 @@
 
 % how do EDRs
 
-\section{Proess Injection Attack and EDR Repsonse Primer}
-
+%\section{Proess Injection Attack and EDR Repsonse Primer}
+\section{Process Injection Techniques as Malware Attacks on Windows}
 
 Terminology \ldots Host-based code injection attack (HBCIA) techniques \autocite{Barabosch:2014} continue to evolve since a method to map an external module into a target process by Microsoft \autocite{Ghizzoni:2004} was published, to support applications such as ``anti-virus programs, profilers, debuggers, and pseudo-localization testing'', and quickly used by malicious actors to insert DLLs into target processes \autocite{Jang:2007}.
 
 Recently a new host-base code injection (HBCI) method targeting the code sections with Read Write eXecute (RWX)  \textit{(include more detail here)} was identified by researchers \autocite{Peixoto:2023}.  This report is a review of this technique and an overview of this class of attacks.
+
+\subsection{Code Injection Methods}
+
+Talk about Mitre process injection tech T1055 \autocite{Mitre:2017}
+
+\subsection{Notable malware incidents on Windows platforms}
+
+\subsection{Definition and classification of malware; Overview of process injection}
+
+\subsection{Common vectors for malware distribution and use by Common process injection techniques}
+
+\subsection{Use cases for process injection in malware}
+
+\subsubsection{Evading detection}
+
+\subsubsection{Privilege escalation}
+
+\subsubsection{Payload delivery and execution}
+
+\subsubsection{Deploying Payload into Windows Memory Space}
+
+% \href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{Process injection sharing payload}
+
+\autocite{Zhan:2018}
+
+\href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
+
+\href{https://github.com/elddy/Windows-NTAPI-Injector}{NTAPI injector} 
+
+\href{https://gist.github.com/WKL-Sec/96e17188e4c159c2cdf7ff2c111130cc#file-local-c}{Injector examples in C}
+
+\href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
+
+\href{https://medium.com/@s12deff/process-injection-with-random-rwx-memory-spaces-3e3651149527}{PI with random RWX memory spaces}
+
+
+\subsection{Detection and Mitigation}
+
+\subsubsection{Current strategies for detecting process injection}
+
+\subsubsection{Anti-malware tools and techniques}
+
+\subsubsection{Best practices for preventing and mitigating process injection attacks}
+
+\begin{itemize}
+\item DLL Injection
+\item Code Injection
+\item Atom Bombing
+\item Reflective DLL Injection
+\end{itemize}
+
+
+\section{EDRs Response to an Evolving Threat Landscape}
 
 
 End-point Detection and Response Systems (EDR) have developed to counter these myriad threats.  These systems are gaining in sophistication and adversaries
@@ -36,31 +89,16 @@ Anomaly detection can be prone to false positives.  The threat actor will look f
 These protections can be signatu
 
 
-
-\subsection{Endpoint Security: EDR}
-
 % \href{https://www.crowdstrike.com/cybersecurity-101/endpoint-security/edr-vs-mdr-vs-xdr/}{EDR vs MDR vs XDR}
 HBCI techniques work on injecting code into running processes and having that code executed as part of the normal process
 execution.  End-point Detection and Response (EDR) systems \autocite{Hayes:2023} provides realtime visibiluty
 
 Process injection seeks bypass EDR hooks by injecting code into trusted processes with RWX permissions already set.
 
-\subsection{Code Injection Methods}
+\subsection{Emerging trends in malware attacks on Windows}
 
-Talk about Mitre process injection tech T1055 \autocite{Mitre:2017}
+\subsection{Advancements in process injection techniques}
 
-\subsubsection{Deploying Payload into Windows Memory Space}
+\subsection{Future predictions for the evolution of these threats}
 
-% \href{https://modexp.wordpress.com/2018/07/15/process-injection-sharing-payload/}{Process injection sharing payload}
 
-\autocite{Zhan:2018}
-
-\href{https://www.riskinsight-wavestone.com/en/2023/10/process-injection-using-ntsetinformationprocess/}{PI using NTSetInformationProcess}
-
-\href{https://github.com/elddy/Windows-NTAPI-Injector}{NTAPI injector} 
-
-\href{https://gist.github.com/WKL-Sec/96e17188e4c159c2cdf7ff2c111130cc#file-local-c}{Injector examples in C}
-
-\href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
-
-\href{https://medium.com/@s12deff/process-injection-with-random-rwx-memory-spaces-3e3651149527}{PI with random RWX memory spaces}
