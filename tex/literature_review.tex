@@ -59,7 +59,6 @@ Cite using:
 
 In light of the concerns raised in the Harvard Business Review article, this report aims to address the critical issues surrounding cybersecurity oversight by boards. The challenges outlined, including the disconnect between boards and CISOs, the focus on protection over resilience, the perception of cybersecurity as a technical topic, the need for cybersecurity expertise in board composition, and the imperative of making cybersecurity a continuous priority, underscore the urgency for a more strategic and proactive approach. This report will delve into the specific aspect of malware attacks and process injection techniques on Windows, offering insights and recommendations to enhance board-level discussions and decisions in the ever-evolving landscape of cybersecurity threats.
 
-% \textcite{Milica:2023}.
 \subsubsection{\textcite{Milica:2023}}
 \textbf{\citetitle{Milica:2023}}: Headlines increasingly highlight the consequences of poor cybersecurity practices. Board members with cybersecurity experience are trying to get their fellow members’ attention on it. And board members want to provide oversight, even though they just don’t have the right questions to ask. Boards need to discuss their organization’s cybersecurity-induced risks and evaluate plans to manage those risks. With the right conversations about keeping the company resilient, they can take the next step to provide adequate cybersecurity oversight.
 
@@ -118,49 +117,6 @@ This report will delve into the specific aspect of malware attacks and process i
 \textbf{\citetitle{Hiscox:2022}}: 
 
 
-\subsection{It couldn't happen to me/The CISO and current state of malware attacks on Windows.}
-
-\subsubsection{\textcite{CISA:2023a}}
-\textbf{\citetitle{CISA:2023a}}:  CVE-2023-4966 is a software vulnerability found in Citrix NetScaler ADC and NetScaler Gateway appliances with exploitation activity identified as early as August 2023. This vulnerability provides threat actors, including LockBit 3.0 ransomware affiliates, the capability to bypass MFA [T1556.006] and hijack legitimate user sessions [T1563].
-
-After acquiring access to valid cookies, LockBit 3.0 affiliates establish an authenticated session within the NetScaler appliance without a username, password, or access to MFA tokens [T1539]. Affiliates acquire this by sending an HTTP GET request with a crafted HTTP Host header, leading to a vulnerable appliance returning system memory information [T1082]. The information obtained through this exploit contains a valid NetScaler AAA session cookie.
-
-Threat Actor Activity
-Malware identified in this campaign is generated beginning with the execution of a PowerShell script (123.ps1) which concatenates two base64 strings together, converts them to bytes, and writes them to the designated file path.
-
-\begin{verbatim}
-$y = "TVqQAAMA...<long base64 string>"
-$x = "RyEHABFQ...<long base64 string>"
-$filePath = "C:\Users\Public\adobelib.dll"
-$fileBytes = [System.Convert]::FromBase64String($y + $x)
-[System.IO.File]::WriteAllBytes($filePath, $fileBytes)
-\end{verbatim}
-
-The resulting file (adobelib.dll) is then executed by the PowerShell script using rundll32.
-
-\begin{verbatim}
-rundll32 C:\Users\Public\adobelib.dll,main <104 hex char key>
-\end{verbatim}
-
-The Dynamic Link Library (DLL) will not execute correctly without the 104 hex character key. Following execution, the DLL attempts to send a POST request to https://adobe-us-updatefiles[.]digital/index.php which resolves to IP addresses 172.67.129[.]176 and 104.21.1[.]180 as of November 16, 2023. Although adobelib.dll and the adobe-us-updatefiles[.]digital have the appearance of legitimacy, the file and domain have no association with legitimate Adobe software and no identified interaction with the software.
-
-Other observed activities include the use of a variety of TTPs commonly associated with ransomware activity. For example, LockBit 3.0 affiliates have been observed using AnyDesk and Splashtop remote management and monitoring (RMM), Batch and PowerShell scripts, the execution of HTA files using the Windows native utility mshta.exe and other common software tools typically associated with ransomware incidents.
-
-\subsubsection{\textcite{CVE-2023-3467}}
-\textbf{\citetitle{CVE-2023-3467}}: 
-
-
-\subsubsection{\textcite{CVE-2023-3519}}
-\textbf{\citetitle{CVE-2023-3519}}: 
-
-
-
-\subsection{Understanding the enemy}
-
-\subsubsection{\textcite{CISA:2023}}
-\textbf{\citetitle{CISA:2023}}: 
-
-
 
 % Section 2 is a literature review of HBCI methods and endpoint security that is typically relied upon to prevent these types of attack.  We will then look at methods a identifying these attacks and look at the likelihood of Endpoint Security products of identifying the attack
 
@@ -172,6 +128,20 @@ Other observed activities include the use of a variety of TTPs commonly associat
 
 \section{Process Injection Techniques as Malware Attacks on Windows}
 % \section{Host-based code injection attack (HBCIA) techniques}
+
+\subsubsection{\textcite{Ghizzoni:2004} Initial technique developed by Microsoft for legal uses}
+\textbf{\citetitle{Ghizzoni:2004}}: MS Patent. Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
+
+For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
+
+Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
+
+For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
+
+\subsubsection{\textcite{Berdajs:2010} API Hooking also used to detect malare}
+\textbf{\citetitle{Berdajs:2010}}: When programmers need to modify third-party applications, they frequently do not have access to their source code. In such cases, DLL injection and API hooking are techniques that can be used to modify applications without intervening into their source code. The commonly used varieties of injection and hooking approaches have many practical limitations: they are inconvenient for a programmer to implement, do not work reliably in conjunction with all applications and with certain low-level machine instructions. In this paper we present two novel approaches to DLL injection and API hooking, which we call Debugger-aided DLL injection and Single Instruction Hooking. Our approaches overcome the limitations of the state-of-the art approaches. Despite incurring greater execution times, our approach allows extending of the applications in situations where the comparable approaches fail. As such, it has a notable practical value for beneficial practical applications of injection and hooking approaches, which are present in malware detection programs and computer security tools.
+
+
 
 \subsection{Background Reasons for Process Injection}
 
@@ -289,30 +259,6 @@ This results in 4 possible HBCIA algorithm classes:
 \end{figure}
 
 
-\subsubsection{\textcite{Ghizzoni:2004} Initial technique developed by Microsoft for legal uses}
-\textbf{\citetitle{Ghizzoni:2004}}: MS Patent. Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
-
-For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
-
-Many software programs and computer-oriented tools and techniques monitor and analyze executable programs and modules. In many instances, these software programs, tools, and techniques may need to control another program (i.e., “target process”), change a target process' behavior with the target process being unaware of the change in control or behavior, or determine how the target process will interact with other programs and the operating system in which the target process will be run.
-
-For example, anti-virus software needs to map into the target process and determine what the target process will do when it is activated. Debuggers are used to detect, locate, and correct logical or syntactical errors in the target process. They allow a programmer to step through a target process, examine the data, and monitor conditions (such as variables) in the target process. Profilers analyze a target process and determine the time that the process spends in various parts the process during execution. This is often used to determine which API (Application Programming Interface) calls are taking up time. Security check tools verify that a user is authorized to execute a particular process or that a target process is allowed to run a particular task. API interception techniques intercept program calls sent to a target process or sent from a target process. This requires mapping into the target process at the beginning of the process' execution and is done for a variety of reasons including testing the target process, profiling, monitoring selected events, and re-directing the API call to another process. Pseudo-localization attempts to anticipate what a target process will do when that process and the process' resources are changed into a different language for operation in different regions of the world.
-
-
-\subsubsection{\textcite{Jang:2007}}
-\textbf{\citetitle{Jang:2007}}: As the individual PC hacking and game hacking by economical purpose increase rapidly recently, malicious codes attacking Windows system are often represented. Techniques to insert DLL within memory of target process are widely spread in order to acquire concealment channel of malicious code, detour ways of avoiding security systems and get specified information.
-
-This paper presented the technology that judge whether or not DLL inserted in memory area of target process is malicious. In order to take DLL injected in the process within hacked systems, we draw the explicit loaded DLL in two steps; analyzing the imported DLL by the use of PE format and then taking DLL that is loaded in the process. Finally, we describe techniques to judge if DLL taken like this is malicious or not by using characteristics of DLL that make in Microsoft.
-
-We have judged malicious DLL or narrowed the scope of the investigation by taking advantage of technology at the damage system analysis.
-
-\subsubsection{\textcite{Peixoto:2023}}
-\textbf{\citetitle{Peixoto:2023}}: Throughout the blog post, we will delve into various process injection techniques employed by attackers to bypass security controls and gain unauthorized access. We will address the challenges presented by EDRs and XDRs, emphasizing the importance of understanding and mitigating the risks associated with process injection. Additionally, we will share insights gained from our research, including the development of our own process injection technique. We will highlight the capabilities and implications of this technique, shedding light on its effectiveness, potential impact and detection opportunities for defenders.
-
-\textbf{Why is this technique important?}: It's a new potential security vulnerability. It is a process injection
-technique utilised byattackers to deceive robust security products in a corporate environment, such as ``EDRS'' and \textbf{XDRS}.
-
-Process is designed to bypass security controls to gain unauthorised access.
 
 \subsection{Code Injection Methods}
 
@@ -342,7 +288,7 @@ More sophisticated samples may perform multiple process injections to segment mo
 \end{itemize}
 
 
-\begin{table}[h!]
+\begin{table}[!ht]
   \centering
   \caption{Attack Mitigants \autocite{Mitre:2017}}
 \begin{tabular}{ |p{1.2cm}||p{2cm}|p{11.5cm}|  }
@@ -366,7 +312,7 @@ More sophisticated samples may perform multiple process injections to segment mo
 \label{table: Mitigations}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Injection Detection Methods \autocite{Mitre:2017}}
 \begin{tabular}{ |p{1.2cm}||p{2cm}|p{3cm}|p{8cm}|  }
@@ -413,7 +359,7 @@ More sophisticated samples may perform multiple process injections to segment mo
 
 \textbf{\citetitle{Hosseini:2017}}: 
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{10 Process Injection Techniques \autocite{Hosseini:2017}}
 \begin{tabular}{ |p{3.5cm}||p{1.2cm}|p{10cm}|  }
@@ -494,22 +440,73 @@ More sophisticated samples may perform multiple process injections to segment mo
 
 \href{https://learn.microsoft.com/en-gb/windows/win32/winmsg/about-hooks}{Microsoft Win32 Hooks Overview: hook types and example uses}
 
-
+\subsection{Determination of Intent: is it malware}
 \subsection{Definition and classification of malware; Overview of process injection}
 
+\subsubsection{\textcite{Jang:2007}}
+\textbf{\citetitle{Jang:2007}}: As the individual PC hacking and game hacking by economical purpose increase rapidly recently, malicious codes attacking Windows system are often represented. Techniques to insert DLL within memory of target process are widely spread in order to acquire concealment channel of malicious code, detour ways of avoiding security systems and get specified information.
 
-\subsubsection{\textcite{Berdajs:2010} Legal adapted from malware techniques}
-\textbf{\citetitle{Berdajs:2010}}: When programmers need to modify third-party applications, they frequently do not have access to their source code. In such cases, DLL injection and API hooking are techniques that can be used to modify applications without intervening into their source code. The commonly used varieties of injection and hooking approaches have many practical limitations: they are inconvenient for a programmer to implement, do not work reliably in conjunction with all applications and with certain low-level machine instructions. In this paper we present two novel approaches to DLL injection and API hooking, which we call Debugger-aided DLL injection and Single Instruction Hooking. Our approaches overcome the limitations of the state-of-the art approaches. Despite incurring greater execution times, our approach allows extending of the applications in situations where the comparable approaches fail. As such, it has a notable practical value for beneficial practical applications of injection and hooking approaches, which are present in malware detection programs and computer security tools.
+This paper presented the technology that judge whether or not DLL inserted in memory area of target process is malicious. In order to take DLL injected in the process within hacked systems, we draw the explicit loaded DLL in two steps; analyzing the imported DLL by the use of PE format and then taking DLL that is loaded in the process. Finally, we describe techniques to judge if DLL taken like this is malicious or not by using characteristics of DLL that make in Microsoft.
+
+We have judged malicious DLL or narrowed the scope of the investigation by taking advantage of technology at the damage system analysis.
+
+This article discusses techniques for detecting malicious DLLs that have been injected into processes in a Windows system. Here is a summary and keywords:
+
+Summary:
+
+\begin{itemize}
+\item Malicious code often injects DLLs into processes to hide, detour security systems, or steal information. This paper presents techniques to detect such injected DLLs.
+\item It first describes common DLL injection techniques like Windows hooks and CreateRemoteThread.
+\item Then it explains how to identify explicitly loaded DLLs that were not imported normally - these may be malicious injects. This uses PE file analysis and process module enumeration.
+\item Finally, it gives techniques to determine if a loaded DLL is likely malicious. This checks VERSIONINFO, PE headers, section structures for signs it was not built by Microsoft.
+\end{itemize}
+
+\textbf{Keywords}: DLL injection, Import analysis, Process enumeration, PE headers, Code signatures, Malware detection,
 
 
+Detection Techniques:
 
+\begin{itemize}
+\item Imported DLL analysis through PE file headers
+\item Loaded module enumeration in processes
+\item File metadata checks like VERSIONINFO resource
+\item PE header and section alignment values
+\item Code signing checks
+\end{itemize}
+
+  
 \subsection{Deploying Payload into Windows Memory Space}
 
 \subsubsection{\textcite{Zhan:2018}}
 \textbf{\citetitle{Zhan:2018}}:  The purpose of this post is to discuss deploying the payload into the memory space of a target process for execution. One can use conventional Win32 API for this task that some of you will already be familiar with, but there’s also the potential to be creative using unconventional approaches. For example, we can use API to perform read and write operations they weren’t originally intended for and that might help evade detection.
 
+\textbf{Keywords}: Process injection, Code injection, Evasion, Section objects, Shared memory, IPC, WM\_COPYDATA, AtomBombing, Return-oriented programming (ROP)
+
 There are various ways to deploy and execute a payload, but not all are simple to use. Let’s first focus on the conventional API that despite being relatively easy to detect are still popular among threat actors.
 Below is a screenshot of VMMap from sysinternals showing the types of memory allocated for the system I’ll be working on (Windows 10). Some of this memory has the potential to be used for storage of a payload.
+
+Discusses evasive process injection techniques without using common methods like VirtualAllocEx/WriteProcessMemory.
+
+Explains using section objects, shared memory, IPC, and user-mode callbacks for injecting code.
+
+Demonstrates injecting code into a process with a GUI using WM\_COPYDATA. Data is copied but hard to execute from stack.
+
+Mentions other stealthy injections like PowerLoader using shared sections and AtomBombing using code caves in DLLs.
+
+
+Differences from Previous Article:
+
+Focuses more on evasive and stealthy injection techniques rather than common methods
+
+Discusses injecting code via shared memory and interprocess communication
+
+Mentions real-world malware using innovative injection like PowerLoader and AtomBombing
+
+Attempts injection via user-mode callback table but notes reliability issues
+
+Does not provide full code injection exploits but analysis of potential techniques
+
+The evasive methods here attempt to inject code in a stealthy way without using APIs that would raise alerts. The attacks leverage OS internals and shared resources between processes rather than directly writing memory.
 
 
 \subsubsection{\textcite{Dequeker:2023}}
@@ -560,7 +557,7 @@ Specifically:
   So in summary, the Nirvana callback is a special user mode function registered on a process that intercepts the control flow after every kernel system call, allowing inspection and modification of the process. This works on both local and remote processes if debugger access is allowed.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \includegraphics[scale=0.9]{dequeker_standard_process_injection_pattern.png}
 \caption{Standard process Injection pattern \autocite{Dequeker:2023}}
 \end{figure}
@@ -646,6 +643,37 @@ Special Techniques:
 
 
 \href{https://www.unknowncheats.me/forum/anti-cheat-bypass/286274-internal-detection-vectors-bypass.html}{internal detection vectors bypass}
+
+
+\subsubsection{\textcite{smellyvx:2021}}
+
+\textbf{\citetitle{smellyvx:2021}}:
+
+\textbf{Keywords}:  Dynamic syscall resolution, PE headers, Pseudo-disassembly, Position independent code, Shellcode injection, Process injection.
+
+Explains weaknesses of relying on hardcoded syscalls for malware and red team tools. Vulnerable to breakage across OS versions.
+
+Discusses dynamically resolving syscalls from ntdll.dll export table at runtime to build a position independent call table.
+
+Walks PE headers to find the export table. Pseudo-disassembles functions to extract syscall numbers.
+
+Builds a table of syscalls without any dependencies or imports. Uses assembled shellcode to invoke them.
+
+Proof-of-concept demonstrates resolving APIs and using them to perform process injection. Avoids hardcoded dependencies.
+
+Differences from Previous Articles:
+
+Focuses on fully dynamic syscall resolution unlike static definitions used before.
+
+Aims for total position independence rather than relying on imports.
+
+Disassembles export table to find syscalls instead of hardcoded values.
+
+Builds entire call table at runtime to avoid breakages across OS versions.
+
+Uses handwritten assembly stub to invoke syscalls.
+
+This technique is more advanced because it completely decouples dependency on any imports or static syscall definitions. By pseudo-disassembling functions and extracting the values, it can adapt to any Windows version. The position independent call table and assembled shellcode allow executing payloads without relying on hardcoded links. This makes the resulting program highly portable and resilient.
 
 
 
@@ -766,6 +794,7 @@ However, the authors suggest that the framework can be deployed on client device
 % Section 3 an investigation into the Mockingjay attack and against a recently published paper ``Procguard'' \cite:{Wang:2022} and asks weather this attack method would lickly be caught.
 \section{Case Study: Introducing MockingJay; New Process Injection Attacks}
 
+
 \href{https://www.securityjoes.com/post/process-mockingjay-echoing-rwx-in-userland-to-achieve-code-execution}{Mockingjay echoing in userland to achieve code execution}
 
 \href{https://www.linkedin.com/posts/john-stigerwalt-90a9b4110_mockingjay-memory-allocation-primitive-activity-7083050050158743552-Hgyw}{mockingjay memory allocation primative}
@@ -774,13 +803,84 @@ However, the authors suggest that the framework can be deployed on client device
 
 The Mockingjay  attack targets trusted and legitimate processes runing on a sytem.  
 
-%\subsection{Real-world examples of malware employing process injection on Windows}
-\subsection{Detailed analysis of new process injection attacks.}
 
-\subsection{Examination of how these attacks could potentially evade an organization's EDR system.}
+%\subsection{Real-world examples of malware employing process injection on Windows}
+\subsection{Context: Detailed analysis of new process injection attacks.}
+
+\citetitle{smellyvx:2021} \autocite{smellyvx:2021}
+\subsubsection{\textcite{Peixoto:2023}}
+\textbf{\citetitle{Peixoto:2023}}: Throughout the blog post, we will delve into various process injection techniques employed by attackers to bypass security controls and gain unauthorized access. We will address the challenges presented by EDRs and XDRs, emphasizing the importance of understanding and mitigating the risks associated with process injection. Additionally, we will share insights gained from our research, including the development of our own process injection technique. We will highlight the capabilities and implications of this technique, shedding light on its effectiveness, potential impact and detection opportunities for defenders.
+
+\textbf{Why is this technique important?}: It's a new potential security vulnerability. It is a process injection
+technique utilised byattackers to deceive robust security products in a corporate environment, such as ``EDRS'' and \textbf{XDRS}.
+
+Process is designed to bypass security controls to gain unauthorised access.
+
+
+Summary:
+
+Identifies that EDRs hook common injection APIs like VirtualAllocEx. Aims to find alternate injection methods.
+Discovers a vulnerable DLL with a default RWX code section that can be leveraged.
+Uses the RWX section to inject shellcode into same and remote processes without typical allocation or permission APIs.
+Tests self-injection into a process and remote injection into ssh.exe process as proof-of-concepts.
+
+\textbf{Keywords}: Process injection, EDR evasion, RWX permissions , Shellcode injection. Remote process injection
+
+Differences from Previous Articles:
+
+Novel technique using default vulnerable DLL instead of typical injection workflows
+Eliminates usage of memory allocation and permission APIs typically monitored by EDRs
+Leverages RWX section to avoid setting execute permissions after allocation
+No need to explicitly create any threads for execution unlike other methods
+Tests both self-injection and sophisticated remote injection with ssh.exe
+This is an advanced technique because it demonstrates a stealthy way to perform process injection using a permission misconfiguration instead of easily detectable Windows APIs. By locating an existing RWX code section, it bypasses allocation and permission hooks in EDRs. The remote ssh.exe injection also runs shellcode seamlessly without starting threads. The abuse of privileged sections gives it an element of novelty over typical injection tactics.
+
+
+\subsection{Alternatives: how these attacks could potentially evade EDR}
+
+\subsubsection{It couldn't happen to me/The CISO and current state of malware attacks on Windows.}
+
+\subsubsection{\textcite{CISA:2023a}}
+\textbf{\citetitle{CISA:2023a}}:  CVE-2023-4966 is a software vulnerability found in Citrix NetScaler ADC and NetScaler Gateway appliances with exploitation activity identified as early as August 2023. This vulnerability provides threat actors, including LockBit 3.0 ransomware affiliates, the capability to bypass MFA [T1556.006] and hijack legitimate user sessions [T1563].
+
+After acquiring access to valid cookies, LockBit 3.0 affiliates establish an authenticated session within the NetScaler appliance without a username, password, or access to MFA tokens [T1539]. Affiliates acquire this by sending an HTTP GET request with a crafted HTTP Host header, leading to a vulnerable appliance returning system memory information [T1082]. The information obtained through this exploit contains a valid NetScaler AAA session cookie.
+
+Threat Actor Activity
+Malware identified in this campaign is generated beginning with the execution of a PowerShell script (123.ps1) which concatenates two base64 strings together, converts them to bytes, and writes them to the designated file path.
+
+\begin{verbatim}
+$y = "TVqQAAMA...<long base64 string>"
+$x = "RyEHABFQ...<long base64 string>"
+$filePath = "C:\Users\Public\adobelib.dll"
+$fileBytes = [System.Convert]::FromBase64String($y + $x)
+[System.IO.File]::WriteAllBytes($filePath, $fileBytes)
+\end{verbatim}
+
+The resulting file (adobelib.dll) is then executed by the PowerShell script using rundll32.
+
+\begin{verbatim}
+rundll32 C:\Users\Public\adobelib.dll,main <104 hex char key>
+\end{verbatim}
+
+The Dynamic Link Library (DLL) will not execute correctly without the 104 hex character key. Following execution, the DLL attempts to send a POST request to https://adobe-us-updatefiles[.]digital/index.php which resolves to IP addresses 172.67.129[.]176 and 104.21.1[.]180 as of November 16, 2023. Although adobelib.dll and the adobe-us-updatefiles[.]digital have the appearance of legitimacy, the file and domain have no association with legitimate Adobe software and no identified interaction with the software.
+
+Other observed activities include the use of a variety of TTPs commonly associated with ransomware activity. For example, LockBit 3.0 affiliates have been observed using AnyDesk and Splashtop remote management and monitoring (RMM), Batch and PowerShell scripts, the execution of HTA files using the Windows native utility mshta.exe and other common software tools typically associated with ransomware incidents.
+
+\subsubsection{\textcite{CVE-2023-3467}}
+\textbf{\citetitle{CVE-2023-3467}}: 
+
+
+\subsubsection{\textcite{CVE-2023-3519}}
+\textbf{\citetitle{CVE-2023-3519}}: 
+
 
 %\subsection{Analysis of the impact and consequences of these incidents}
 \subsection{Significance of the use case in assessing and improving the organization's cybersecurity measures.}
+
+
+\subsubsection{\textcite{CISA:2023}: Understanding the enemy}
+\textbf{\citetitle{CISA:2023}}
+
 
 \subsubsection{\textcite{Wang:2020}}
 \textbf{\citetitle{Wang:2020}}:  To subvert recent advances in perimeter and host security, the attacker community has developed and employed various attack vectors to make a malware much stealthier than before to penetrate the target system and prolong its presence. Advanced malware or "stealthy malware" makes use of various techniques to impersonate or abuse benign applications and legitimate system tools to minimize its footprints in the target system. Thus, it is difficult for traditional detection tools, such as malware scanners, to detect it, as the malware normally does not expose its malicious payload in a file and hides its malicious behaviors among the benign behaviors of the processes. In this paper, we present PROVDETECTOR, a provenance-based approach for detecting stealthy malware. Our insight behind the PROVDETECTOR approach is that although stealthy malware attempts to blend into benign processes, the malicious behaviors inevitably interact with the underlying operating system (OS), which will be exposed to and captured by provenance monitoring. Based on this intuition, PROVDETECTOR first employs a novel selection algorithm to identify possible malicious parts in the OS-level provenance data of a process. It then applies a neural embedding and machine learning pipeline to automatically detect any behavior that deviates significantly from normal behaviors. We evaluate our approach on a large provenance dataset from an enterprise network and demonstrate that it achieves very high detection performance of stealthy malware (an average F1 score of 0.974). Further, we conduct thorough interpretability studies to understand the internals of the learned machine learning models.
@@ -863,7 +963,7 @@ By leveraging causality analysis and historical context, provenance-based auditi
 
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \includegraphics[scale=0.4]{ms_hardware_interfaces.png}
 \caption{MS Hardware Interfaces}
 \end{figure}
