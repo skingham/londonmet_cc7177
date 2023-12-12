@@ -26,7 +26,7 @@ with checks based on code signing, file metadata, Portable Executable (PE) file 
 
 \subsection{Code Injection Taxonomy}
 
-To understanding the general principles it is helpful to use the taxonomy of \textcite{Barabosch:2014}.
+To understanding the general principles, it is helpful to use the taxonomy of \textcite{Barabosch:2014}.
 The authors distinguish between Host-Based Code Injection Attacks (HBCIA) that orginate and infect process on the
 same system from Remote-Based Code Injection Attacks (RBCIA), such as worms, where the victim process is on a system
 remote from the infecting agent.
@@ -52,7 +52,7 @@ How we select our victim and how we execute our code can be categorised to aid o
   \begin{enumerate}
   \item Targeted Injection:
     \begin{itemize}
-    \item Malware selects a specific subset of processes to inject into based on an internal target list (e.g. critical
+    \item Malware selects a specific subset of processes to inject into based on an internal target list (e.g., critical
         processes like explorer.exe.)
     \item Less suspicious as avoids risky/unnecessary processes.
     \end{itemize}
@@ -72,7 +72,7 @@ How we select our victim and how we execute our code can be categorised to aid o
   \item Thread Manipulation:
     \begin{itemize}
     \item The injected code replaces or blocks the original victim process's thread(s) which do not continue.
-    \item Victim process exhibits mainly the injected code's behavior.
+    \item Victim process exhibits mainly the injected code's behaviour.
     \end{itemize}
   \end{enumerate}
 \end{itemize}
@@ -80,7 +80,7 @@ How we select our victim and how we execute our code can be categorised to aid o
 \begin{table}[!ht]
   \centering
   \caption{Prevalence of classes of HBCIA algorithms \autocite{Barabosch:2014}}
-\begin{tabular}{ |p{2cm}|p{2cm}||p{3.8cm}|p{3.8cm}|  }
+\begin{tabular}{ |p{2cm}|p{2.5cm}||p{4.2cm}|p{4.2cm}|  }
   \hline
   & & \multicolumn{2}{|c|}{Victim Selection} \\
   \cline{3-4}
@@ -101,7 +101,7 @@ How we select our victim and how we execute our code can be categorised to aid o
 \subsection{Common techniques in windows malware attacks}
 
 When understanding the possible approaches to protecting against code injection attacks researchers look at all classes of attacks.
-MITRE ATT\&CK(R) is a knowledge base of advesary tactics which is a useful resource and collects information on injection implementations
+MITRE ATT\&CK\textregistered\; is a knowledge base of advesary tactics which is a useful resource and collects information on injection implementations
 for all major OSs, with a dizzing array of samples \autocite{Mitre:2017}.
 
 A more useful summary when understanding the Mockingjay attack is to look at the common Windows techniques \autocite{Hosseini:2017}.  We
@@ -110,25 +110,25 @@ avoid telltail behaviours of older techniques.
 
 \begin{table}[!ht]
 \centering
-\caption{10 Windows Process Injection Techniques \autocite{Hosseini:2017}}
+\caption{10 Windows Process Injection Techniques. Reproduced from \autocite{Hosseini:2017}}
 \begin{tabular}{ |p{3.5cm}||p{10.5cm}|  }
   \hline
   \multicolumn{2}{|c|}{Ten process injection techniques} \\
   \hline
   Name & Description \\
   \hline
-  Classic DLL Injection Via Createremotethread And Load Library
+  Classic DLL Injection Via Createremotethread and Load Library
              & The malware writes the path to its malicious DLL in the virtual address space of another process,
                and ensures the remote process loads it by creating a remote thread in the target process. \\
   \hline
   PE Injection
              & Copy malicious code into an existing open process and cause it to execute (either via a
                small shellcode, or by calling CreateRemoteThread). The malware is file-less, not placing a malicious DLL
-               on the disk.  It still allocates memory in a host process (e.g. VirtualAllocEx),
+               on the disk.  It still allocates memory in a host process (e.g., VirtualAllocEx),
                but writes its malicious code by calling WriteProcessMemory. \\
   \hline
   Process Hollowing (A.K.A Process Replacement and Runpe)
-             & The malware unmaps (hollows out) the legitimate code from memory of the target process, and
+             & The malware unmaps (hollows out) the legitimate code from memory of the target process and
                overwrites the memory space of the target process (e.g., svchost.exe) with a malicious executable.\\
   \hline
   Thread Execution Hijacking A.K.A Suspend Inject and Resume (SIR)
@@ -142,25 +142,25 @@ avoid telltail behaviours of older techniques.
              & Malicious DLL loaded upon an event getting triggered in a specific thread. This is usually
                done by calling SetWindowsHookEx to install a hook. \\
   \hline
-  Injection and Persistence via Registry Modification (E.G. Appinit\_DLLS, AppCertDLLs, IFEO)
+  Injection and Persistence via Registry Modification (e.g. Appinit\_DLLS, AppCertDLLs, IFEO)
              & Appinit\_DLL, AppCertDlls, and IFEO (Image File Execution Options) are all registry keys that
                malware uses for both injection and persistence. \\
   \hline
-  APC Injection And Atombombing
+  APC Injection and Atombombing
              & Use APC to force another thread to execute their custom code by attaching it to the APC
                Queue of the target thread. \\
   \hline
   Extra Window Memory Injection (EWMI) via Setwindowlong
-             & Injecting into Explorer tray window’s extra window memory, and has been used a few times
+             & Injecting into Explorer tray window’s extra window memory and has been used a few times
                among malware families such as Gapz and PowerLoader. There is not much room in EWM, so the
-               malware writes code into a shared section of explorer.exe, and uses SetWindowLong and
+               malware writes code into a shared section of explorer.exe and uses SetWindowLong and
                SendNotifyMessage to have a function pointer to point to the shellcode, and then execute it. \\
   \hline
   Injection Using Shims
              & Shims allow developers to apply fixes to their programs without the need of rewriting code.
                Malware can take advantage of shims to target an executable for both persistence and injection.
-               Windows runs the Shim Engine when it loads a binary to check for shimming databases in order
-              to apply the appropriate fixes. \\
+               Windows runs the Shim Engine when it loads a binary to check for shimming databases
+               to apply the appropriate fixes. \\
   \hline
   At Hooking and Inline Hooking (A.K.A Userland Rootkits)
             & Malware changes the import address table. When a legitimate application calls an API located
@@ -173,33 +173,32 @@ avoid telltail behaviours of older techniques.
 \end{table}
 
 
-\subsection{Endpoint security}
+\subsection{End-point security}
 
 EDR solutions cover a wide range of cyber-security capabilities to monitor in real time the health of applications
-and services, detect anomolous activity and respond to an attack.
-Related technologies are Managed Detection and Response (MDR) \autocite{Hayes}, which offers endpoint security as a service, and
+and services, detect anomalous activity and respond to an attack.
+Related technologies are Managed Detection and Response (MDR) \autocite{Hayes:2023}, which offers end-point security as a service, and
 eXtended Detection and Response, which consolidates applications and collects data from across the enterprise to
 have a wider scope of view to detect changes in behaviours across systems.
 
-For the rest of this report we will not delve into the specifics of the capabilities of the various end-point
-solutions.
+For the rest of this report, we will not delve into the specifics of the capabilities of the various end-point solutions.
 But we can use the MITRE categories to see where these defences are focused:
 
 
 \begin{table}[!ht]
   \centering
   \caption{Attack Mitigants \autocite{Mitre:2017}}
-\begin{tabular}{ |p{1.2cm}||p{2cm}|p{11.5cm}|  }
+\begin{tabular}{ |p{1.2cm}||p{2cm}|p{10.2cm}|  }
   \hline
   \multicolumn{3}{|c|}{PI Mitigation List} \\
   \hline
   ID	& Mitigation & Description \\
   \hline
-  M1040	& Behavior Prevention on Endpoint &	Endpoint security solutions can be configured to block some types of
-                                            process injection attacls by monitoring certain API calls
-                                            and observing telltail sequences of behavior that occur during the
+  M1040	& Behaviour Prevention on End-point &	End-point security solutions can be configured to block some types of
+                                            process injection attacks by monitoring certain API calls
+                                            and observing tell tail sequences of behaviour that occur during the
                                             injection process.  Attack Surface Reduction (ASR)
-                                            rules may prevent Office applications from code injection.\\
+                                            rules may prevent code injection into Office applications.\\
   \hline
   M1026 & Privileged Account Management	& Restrict the use of certain applications that can be abused by
                                           process injection to privileged users only. Apply and monitor: advanced access control and
@@ -226,7 +225,7 @@ execution makes a system call.
 \caption{RWX process Injection pattern \autocite{Dequeker:2023}}
 \end{figure}
  
-The direct attack can be detected by an EDR/XDR as it needs to use monitored NtSetInformationProcess call.  But the pattern
+The direct attack can be detected by an EDR/XDR as it needs to use the monitored NtSetInformationProcess call.  But the pattern
 will be adapted by Mockingjay.
 
 %\subsection{Use cases for process injection in malware}
@@ -275,24 +274,31 @@ will be adapted by Mockingjay.
 
 EDR/XDR cyber-security solutions have been incorporating protections of increasing levels of sophistication.
 
-At the first level, as discussed earlier, there are static monitoring of a specific machine DLLs and processes to detect changes.
-
-Making sure that certain subsystems have not been modified, had elevated permissions, or unknown processes running on the monitored system.
+At the first level, as discussed earlier, there are static monitoring of a specific machine DLLs and processes to detect changes.  They also
+make sure that certain subsystems have not been modified, have elevated permissions, or that there are unknown processes
+running on the monitored system.
 
 Next, user and entity behaviour analytics (EUBA) tools identify changes in behaviours that could indicate a threat.  This could include the
-applications and systems a user normally uses, looking for configuration changes, and scanning log files for changes in behaviour.
+applications and systems a user normally uses, looking for configuration changes, and scanning log files for changes in behaviour.  Statistical
+modelling will profile normal activity and continuous monitoring will attempt to discern anomalous behaviour if a threat occurs.
 
-Statistical modeling will profile normal activity and continuous monitoring will attempt to descern anomolous behaviour as a threat occurs.
+Researchers are now looking to detect process injection using fine-grained analysis of API call chains using deep learning \autocite{Wang:2022}.
 
-Researchers are now looing to detect process injection using fine-grained analysis of API call chains using deep learning \autocite{Wang:2022}.
+Anomaly detection can be prone to false positives.  The threat actor will look for attacks that could look like innocent behaviour.
 
-Anomaly detection can be prone to false positives.  The threat actor will look for attacks that could look like innocent behavior.
+The response is to use increasingly sophisticated AI and machine learning techniques by looking at system entity interactions.  The behaviours
+of interest to detect potential threats are complicated to the extent that rules based systems relying on expert knowledge to set up tend to
+be brittle.
 
-The response is to use increasingly sophisticated AI and machine learning techniques by looking at system entity interactions.
-An example of this a paper by \textcite{Zengy:2022} where providence analysis of system auditing records seeks to search for anomolies
-that attacks produce.
+Looking at behaviours as connected system operations, some methods involve the inference of intent from audit logs
+and the clustering of semantically similar behaviours \autocite{Zeng:2021}.
+Causal analysis technologies are looking at data provenance as a way to improve detection rates \autocite{Inam:2023}.
+An example of this is in a paper by \textcite{Zengy:2022} where providence analysis of system auditing records is used to
+search for anomalies that an attack would produce.  
 
-We can see a series of adaption and evasion moves that leaves total cyber-protection and ideal that can not be always realised. 
+
+Even as end-point detection solutions broaden and deepen their approaches, we can still envisage a series of adaption and evasion moves that
+leaves total cyber-protection an ideal that cannot always be realised. 
 
 
 %End-point Detection and Response Systems (EDR) have developed to counter these myriad threats.  These systems are gaining in sophistication and adversaries

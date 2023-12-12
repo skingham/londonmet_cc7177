@@ -1,12 +1,12 @@
 \pagebreak
-\section{Case Study: Introducing the MockingJay Process Injection Attacks}
+\section{Case study: introducing the Mockingjay attack}
 
 After our review of process injection techniques used by malware groups, we now ask how a CISO in an organisation can stay ahead of the curve,
 have a realistic understanding of the threats their organisation might face and develop a resilient cyber-security infrastructure.
 
 Our hypothetical CISO has been active in putting in place an XDR system. This has reduced the manual processes his group needs to
 perform --- such as patching individual cybersecurity applications and running separate disjoint processes --- and has leveraged the
-vendor's expertise to configure the monitoring of data produced across endpoints, servers, cloud networks and
+vendor's expertise to configure the monitoring of data produced across end-points, servers, cloud networks and
 security information and event management (SEIM) systems.
 
 Our enlightened CISO has empowered his team to research ways to improve cyber-security and looks forward to using their
@@ -23,7 +23,7 @@ defence to process injection attacks and how it would respond to such an attack 
 \textbf{Problem Statement}:
 
 \begin{enumerate}
-\item A new process injection attack has been identified by Securities Joe.  The exploit circumvents the allocation
+\item Security Joes has identified a new process injection attack.  The exploit circumvents the allocation
   and permission APIs that most EDR systems monitor.  It  does this by using existing RWX code sections without invoking
   new threads.
 \item We may be vulnerable to this attack which could allow a Windows executable to use self-injection or remote injection to deliver a malware payload into our systems.
@@ -50,34 +50,35 @@ This case study will:
 
 
 %\subsection{Real-world examples of malware employing process injection on Windows}
-\subsection{Detailed Analysis of New Process Injection Attack}
+\subsection{Detailed analysis of the new process injection method}
 
 Attackers could exploit the Mockingjay technique to circumvent EDR/XDR monitoring and anti-virus software by avoiding
 common system API calls used by malware.
 
-It does this by searching for windows DLLs with a default RWX memory section that can be exploited to run a malware payload.
-This is similar to the Nirvana callback code injection that use NtWriteVirtualMemory and NtProtectVirtualMemory, which are
+It does this by searching for Windows DLLs with a default RWX memory section that can be exploited to run a malware payload.
+This is similar to the Nirvana callback code injection that uses NtWriteVirtualMemory and NtProtectVirtualMemory calls, which are
 monitored by EDR/XDRs,  but this method avoids those calls.
 
-The DLL and executables exploited in the report were ``msys-2.0.dll'' and the GNU ``ssh.exe'', which come part of Visual Studio Community.
+The DLL and executable exploited in the report were msys-2.0.dll and the GNU ssh.exe, which come part of Visual Studio Community.
 The security report was able to demonstrate:
 
 \begin{enumerate}
 \item Self-injection: build an executable that directly loads the identified DLL, then inject and then execute the payload. 
-\item Remote process injection: create a child process, ``ssh.exe'', that uses loads identified the DLL, then inject a shellcode to initiated
+\item Remote process injection: create a child process, ssh.exe, that uses loads identified the DLL, then inject a shellcode to initiate
   a remote attack which allowed a back-connect shell session to be opened from a remote system.
 \end{enumerate}
 
 An interesting point to note is that the attack code can programmatically construct OS syscall wrappers at run-time without relying
-on hard coded definitions or OS data structures.  These clean call stubs are unmonitored, but 
-they need to built from a clean and unhooked copy ``NTDLL.DLL''.  The method is 
-described in the ``Hell's Gate'' article on virus executable (VX) \autocite{smellyvx:2021}.  The significance of this is that
-the functions within the`` NTDLL.dll'' module are wrappers around OS service requests that the malware payload can exploit. 
+on hard coded definitions or OS data structures.
+These call stubs are unmonitored, but they need to be built from a clean and unhooked copy of NTDLL.DLL.
+The method is described in the ``Hell's Gate'' article \autocite{smellyvx:2021}.
+The significance of this is that the functions within the NTDLL.dll module are wrappers around OS service requests that
+the malware payload can exploit. 
 
-Also payloads are executed without the creation of a new thread, making the detection of this attack by end-point defences harder.
+Also, payloads are executed without the creation of a new thread, making the detection of this attack by end-point defences harder.
 
 
-\subsection{Current Mitigants}
+\subsection{Current mitigants}
 
 The first line of our defence of an attack based on the Mockingjay process injection technique will be our XDR system to:
 \begin{itemize}
@@ -111,7 +112,7 @@ If either of these two approaches are successful, ransomware groups such as Lock
 \pagebreak
 
 %\subsection{Analysis of the impact and consequences of these incidents}
-\subsection{Proposed Solutions to Improving Cyber-security Measures}
+\subsection{Proposed solutions to improving our cyber-security measures}
 
 As Security Joes is a security system vendor, the report itself lists a number of ways that the attack could be detected. In
 the first instance, we should be talking to our XDR vendor to ensure we have the functionality to automate these steps.  At
@@ -139,5 +140,6 @@ For this case study, we recommend the following actions under each of the NIST C
   DLLs, including NTDLL.dll, by non-legitimate processes.
 \item \textbf{Respond}: Ensure that our organisation can report to all relevant authorities and abide by our legal
   responsibilities for disclosures.
-\item \textbf{Recover}: Follow up with internal teams to show recovery procedures from backup are up to date and ensure backups are held for all systems and are immutable. 
+\item \textbf{Recover}: Follow up with internal teams to show recovery procedures from backup are up to date and ensure backups
+  are held for all systems and are immutable. 
 \end{itemize}
