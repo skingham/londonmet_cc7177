@@ -1,21 +1,44 @@
 \documentclass{article}
 
-% Language setting
-% Replace `english' with e.g. `spanish' to change the document language
 \usepackage[english]{babel}
-
-% Set page size and margins
-% Replace `letterpaper' with`a4paper' for UK/EU standard size
 \usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 % Useful packages
-\usepackage[backend=biber, sorting=nyt, style=apa]{biblatex}
-\let\cite\textcite
-
+\usepackage[backend=biber, sorting=nyt, style=authoryear-ibid]{biblatex}
 \usepackage[outputdir=pdf]{minted}
-\usepackage{amsmath}
 \usepackage{graphicx}
+\graphicspath{ {figures/} }
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{parskip}
+%\usepackage{lipsum}
+\usepackage{setspace}
+\doublespacing
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage{csquotes}
+
+% Document style
+%\usepackage[utf8]{inputenc} % Required for inputting international characters
+%\usepackage[T1]{fontenc} % Output font encoding for international characters
+%\usepackage{palatino} % Use the Palatino font
+%\usepackage{microtype} % Improves spacing
+%\usepackage[bf,sf,center]{titlesec} % Required for modifying section titles - bold, sans-serif, centered
+%\usepackage{fancyhdr} % Required for modifying headers and footers
+%\fancyhead[L]{\textsf{\rightmark}} % Top left header
+%\fancyhead[R]{\textsf{\leftmark}} % Top right header
+%\renewcommand{\headrulewidth}{1.4pt} % Rule under the header
+%\fancyfoot[C]{\textbf{\textsf{\thepage}}} % Bottom center footer
+%\renewcommand{\footrulewidth}{1.4pt} % Rule under the footer
+%\pagestyle{fancy} % Use the custom headers and footers throughout the document
+
+% Appendix dictionary template: print each word on the page
+% \markboth{}{} prints the first word on the page in the top left header and the last word in the top right
+%\newcommand{\entry}[4]{\markboth{#1}{#1}\textbf{#1}\ {(#2)}\ \textit{#3}\ $\bullet$\ {#4}}
+\newcommand{\entry}[2]{\markboth{#1}{#1}\textbf{#1}\ $\bullet$\ {#2}}
+
 
 %----------------------------------------------------------------------------------------
 %
@@ -43,35 +66,112 @@
 %
 %----------------------------------------------------------------------------------------
 
-
+%\bibliography{references}
 \addbibresource{references.bib}
 
-\title{Your Paper}
-\author{Stuart Kingham}
+\title{Can Mockingjay Evade your CISO: A Review of Current Process Injection Attacks}
+\author{Stuart Kingham: ID 21014912}
 
 \begin{document}
-\maketitle
+\doublespacing
+
+%\begin{center}
+%{\LARGE Current and emerging online cyber-attacks, threats, and criminal acts, including related digital crimes}
+%\end{center} 
+%\vspace*{\fill}
+
+
+%\maketitle
+\begin{titlepage}
+  \topskip0pt
+  \vspace*{\fill}
+  \begin{center}
+       \vspace*{1cm}
+
+       {\LARGE Current and emerging online cyber-attacks, threats, and criminal acts, including related digital crimes}
+
+       \vspace*{1cm}
+       {\large \textbf{Can Mockingjay Evade your CISO}}
+       
+       \vspace{0.2cm}
+       {\large A Review of a New Process Injection Attack}
+            
+       %\vspace{1.5cm}
+
+       \vfill
+
+       \textbf{Stuart Kingham: ID 2101491}
+
+       \vfill
+                        
+       \vspace{0.8cm}
+     
+       %\includegraphics[width=0.4\textwidth]{university}
+
+       CC7177: Cybercrime and Cyber-Security\\
+       School of Computing and Digital Media\\
+       London Metropolitan University\\
+       December 12, 2023
+            
+  \end{center}
+  \vspace*{\fill}
+\end{titlepage}
+
+\pagebreak
 
 \begin{abstract}
-Your abstract.
+  CISOs and boards are not communicating well, with divergent views on the risks of cyber-attacks.
+  Instead of approaching cyber-security as a technical issue that requires specific expertise in information technology,
+  boards should be focusing on the strategic imperative of cyber-security.
+  They should be engaging with their CISO to discuss and understand the organisational risks that cyber-attacks expose the organisation to.
+  By refocusing on resilience, CISOs can engage more meaningfully with board members.
+  In this report we investigate a new Windows process injection attack, Mockingjay.
+  To understand the threat, we propose a set of recommendations a CISO would utilise to mitigate the risk of a successful attack.
+  While doing this we show how the exercise can also generate recommendations that improve operational resilience as well as the protective mitigants.
+  In this way the CISO can frame cyber-defence planning as tackling specific strategic threats to an organisation. 
+  By fully understanding possible attacks and threat actors, the CISO can demonstrate the safeguards to the organisation's services and capabilities.
+  In creating a more resilient cyber-security system, the CISO acts as an important strategic partner in the reduction of operational risk.
 \end{abstract}
 
+\newpage
+
+\singlespacing 
 \tableofcontents
+\listoffigures
+\listoftables
+\doublespacing
+
+\pagenumbering{roman}
+\pagenumbering{arabic}
+\newpage
 
 \input{assignment_introduction}
 
 \input{assignment_body}
 
-\input{assignment_evaluation}
+\pagebreak
 
 \input{assignment_conclusions}
 
-%\bibliographystyle{alpha}
-%\bibliography{references}
+\pagebreak
+
+\input{assignment_evaluation}
+
+\pagebreak
+
 \printbibliography
 
-\appendix
+%\pagebreak
 
-\input{assignment_appendix_generating_payloads}
+%\appendix
+
+%\input{assignment_appendix_generating_payloads}
+
+%\input{assignment_appendix_terminology.tex}
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
