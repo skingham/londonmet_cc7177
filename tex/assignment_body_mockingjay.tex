@@ -1,29 +1,32 @@
+\pagebreak
 \section{Case Study: Introducing the MockingJay Process Injection Attacks}
 
-In our review of one technique used by malware groups, we now ask how a CISO in a modern organisation can stay ahead of the curve,
-have an realistic appraisal of the threats their organisation might face, and develop a resilient cybersecurity infrastructure.
+After our review of process injection techniques used by malware groups, we now ask how a CISO in an organisation can stay ahead of the curve,
+have a realistic understanding of the threats their organisation might face and develop a resilient cyber-security infrastructure.
 
-Our hyperthetical CISO has been active in putting in place an XDR system that has reduced manual processes to patch individual cybersecurity
-applications, leveraged the vendor's expertise to configure the monitoring of data across endpoints, servers, cloud networks and Security
-information and event management (SEIM) systems.
+Our hypothetical CISO has been active in putting in place an XDR system. This has reduced the manual processes his group needs to
+perform --- such as patching individual cybersecurity applications and running separate disjoint processes --- and has leveraged the
+vendor's expertise to configure the monitoring of data produced across endpoints, servers, cloud networks and
+security information and event management (SEIM) systems.
 
-Our enlightened CISO has empowered his team team to research ways to improve cybersecurity, and looks foward to using their insights to engage with
-senior stakeholds within the organisation, and to regularly brief the board on operation risks and mitigation plans.  
+Our enlightened CISO has empowered his team to research ways to improve cyber-security and looks forward to using their
+insights to engage with senior stakeholders within the organisation.  He champions his team's achievements and regularly
+briefs the board on improvements to understanding their operational risks and mitigation plans.
 
-One of the team security engineers has come across a new potential exploit and has asked to produce this case study for the CISO and his team.  The
-Mockingjay attack \autocite{Peixoto:2023} is a real and novel process injection attack created by Security Joes, a
-``multi-layered MDR \& incident response company'' based in Tel Aviv.
+One of the team's security engineers has come across a new potential exploit and has produced the following case study for the CISO
+and his team.  The Mockingjay attack \autocite{Peixoto:2023} is a real and novel process injection attack created by Security Joes, a
+``multi-layered MDR \& incident response company'' based in Tel Aviv.  The Security Joes report is an opportunity to assess the organisation's
+defence to process injection attacks and how it would respond to such an attack if successful.
 
 \subsection{Introduction}
 
-
-\textbf{Key Problems}:
+\textbf{Problem Statement}:
 
 \begin{enumerate}
 \item A new process injection attack has been identified by Securities Joe.  The exploit circumvents the allocation
   and permission APIs that most EDR systems monitor.  It  does this by using existing RWX code sections without invoking
   new threads.
-\item Our systems may be vulnerable to this attack which could allow a Windows executable to self injection or remote injection.
+\item We may be vulnerable to this attack which could allow a Windows executable to use self-injection or remote injection to deliver a malware payload into our systems.
 \item Recently Citrix has reported vulnerabilities in their NetScaler Application Delivery Controller (ADC) and Gateway products that
   could allow:
   \begin{itemize}
@@ -32,82 +35,109 @@ Mockingjay attack \autocite{Peixoto:2023} is a real and novel process injection 
   \item \citetitle{CVE-2023-4966} \autocite{CVE-2023-4966}.
   \end{itemize}
 \item The Cybersecurity and Infrastructure Security Agency (CISA) has reported that the malware group LockBit \autocite{CISA:2023a} has
-  been found to be actively exploiting CVE-2023-4966 to obtain initial access to Boeing Distribution Inc. \autocite{CISA:2023b}.
+  been found to be actively exploiting CVE-2023-4966 and was able to obtain initial access to systems at Boeing Distribution Inc. \autocite{CISA:2023b}.
 \end{enumerate}
 
-Our organisation should be prepared for similar attacks and group should review our cyber-defences in light of this information.
-As always, we should seek to prevent any successful attack, but also improve our cyber-resilience in the face of a sucessful breach.
+Our organisation should be prepared for similar attacks, and we should review our cyber-defences in light of this information.
+As always, we should seek to prevent any successful attack, but also improve our cyber-resilience in the face of a successful breach.
 
 This case study will:
 \begin{enumerate}
 \item Review the salient points of the new attack vector, how it may evade our XDR system and how we may identify an attack.
-\item Understand ransomware threat actors such as LockBit and how we can detect and respond to ransomware.
+\item Understand ransomware threat actors such as LockBit and how we can detect and respond to a ransomware group's incursion.
 \item Prepare a set of recommendations in line with our Cyber-Security Framework (CSF) \autocite{NIST:2018}.
 \end{enumerate}
 
 
 %\subsection{Real-world examples of malware employing process injection on Windows}
-\subsection{Context: Detailed Analysis of New Process Injection Attack}
+\subsection{Detailed Analysis of New Process Injection Attack}
 
-Attackers could exploit the Mockingjay technique to circumvent XDR process monitoring and anti-virus sofware by avoiding
-common system API calls used by malware.  
+Attackers could exploit the Mockingjay technique to circumvent EDR/XDR monitoring and anti-virus software by avoiding
+common system API calls used by malware.
 
+It does this by searching for windows DLLs with a default RWX memory section that can be exploited to run a malware payload.
+This is similar to the Nirvana callback code injection that use NtWriteVirtualMemory and NtProtectVirtualMemory, which are
+monitored by EDR/XDRs,  but this method avoids those calls.
+
+The DLL and executables exploited in the report were ``msys-2.0.dll'' and the GNU ``ssh.exe'', which come part of Visual Studio Community.
 The security report was able to demonstrate:
 
 \begin{enumerate}
-\item Self-injection
-\item Remote process injection: injected a shellcode into `ssh.exe` in the
+\item Self-injection: build an executable that directly loads the identified DLL, then inject and then execute the payload. 
+\item Remote process injection: create a child process, ``ssh.exe'', that uses loads identified the DLL, then inject a shellcode to initiated
+  a remote attack which allowed a back-connect shell session to be opened from a remote system.
 \end{enumerate}
 
-\subsection{Alternatives: How Attack could Evade XDR}
+An interesting point to note is that the attack code can programmatically construct OS syscall wrappers at run-time without relying
+on hard coded definitions or OS data structures.  These clean call stubs are unmonitored, but 
+they need to built from a clean and unhooked copy ``NTDLL.DLL''.  The method is 
+described in the ``Hell's Gate'' article on virus executable (VX) \autocite{smellyvx:2021}.  The significance of this is that
+the functions within the`` NTDLL.dll'' module are wrappers around OS service requests that the malware payload can exploit. 
 
-The first line of our defense of an attack based on the Mockingjay process injection technique will be our XDR system.
+Also payloads are executed without the creation of a new thread, making the detection of this attack by end-point defences harder.
 
-Using `Lifecycle of a Ransomeware Incident` produced by \autocite{Certnz:2021} and the modus-operandi of the LockBit
+
+\subsection{Current Mitigants}
+
+The first line of our defence of an attack based on the Mockingjay process injection technique will be our XDR system to:
+\begin{itemize}
+\item Consolidation and preparation phase: detect the code injection attack.
+\item Target impact phase: detect the actions of the payload execution, which will be determined by the attacker's motives.
+\end{itemize}
+
+Using ``Lifecycle of a Ransomware Incident'' produced by \autocite{Certnz:2021} and the modus-operandi of the LockBit
 group \autocite{CISA:2023}, we should anticipate:
 
 \begin{enumerate}
-\item Direct attack through our application gateway (Intenet-exposed Service).
+\item Direct attack through our application gateway (Internet-exposed Service).
 \item Phishing attack through email.
 \end{enumerate}
 
-If either of these two approaches are successful, 
+If either of these two approaches are successful, ransomware groups such as LockBit will use the exploit to:
+
+\begin{enumerate}
+\item Exfiltrate data.
+\item Encrypt data.
+\item Destroy backups.
+\end{enumerate}
+
 
 \begin{figure}[ht]
 \includegraphics[scale=0.55]{certnz_aa23-165a.png}
 \includegraphics[scale=0.6]{certnz_aa23-165b.png}
-\caption{Ransomeware Layered Mitigations \autocite{Certnz:2021}}
+\caption{Ransomware Layered Mitigations \autocite{Certnz:2021}}
 \end{figure}
 
 \pagebreak
 
 %\subsection{Analysis of the impact and consequences of these incidents}
-\subsection{Proposed Solution: Assessing and Improving Cybersecurity Measures}
+\subsection{Proposed Solutions to Improving Cyber-security Measures}
 
-As Security Joes is a security system vendor, the report itself lists a number of ways that the attack could be detected. At
+As Security Joes is a security system vendor, the report itself lists a number of ways that the attack could be detected. In
 the first instance, we should be talking to our XDR vendor to ensure we have the functionality to automate these steps.  At
 the very least we need to be able to perform ad-hoc scans across our infrastructure and windows systems to flag the following:
 
 \begin{enumerate}
-  \item point a:
+\item Build a custom scan across our real estate and construct a database of trusted PE files that have a default RWX section.
+\item Monitor for the launching of GNU utilities, as these were exploited by the attack.
+\item Ensure our network scanning is looking for network connections to non-standard ports.
+\item Investigate how to detect the loading of NTDLL.DLL without false positives.
 \end{enumerate}
 
 
 \subsection{Recommendations}
 
-Our organisation is committed to the continud review of new attacks and actively researches the possible impact of reported attacks.
+Our organisation is committed to the continued review of new attacks and actively researches the possible impact of reported attacks.
 This active engagement with the cybersecurity community and our vendors allows us to adapt quickly to changes in the threat landscape.
 
-For this case study, we recommend the following actions under each of the NIST CSF fuctions:
+For this case study, we recommend the following actions under each of the NIST CSF functions:
 
 \begin{itemize}
-\item Identify: Ensure all systems are patched for the CVEs identified and engage with our XDR vendor to respond to this new threat.
-\item Protect: review XDR solutions are monitoring log files to detect encryption; use technique to find vulnerable exes and block them (eg. visual studio ssh exfiltration block known malicios systes
-\item Detect: Develop a Mockingjay red-team exercise against our XDR; test for the detection of the loading of NTDLL.dll from disk.
-\item Respond: Ensure that our organisation is able to report to all relevant authorities  and abide to our legal responsibilities for disclosuress
-\item Recover: review perform disaster recover tests to restore systems from backups and that backups are immutable 
+\item \textbf{Identify}: Ensure all systems are patched for the CVEs identified and engage with our XDR vendor to respond to this new threat.
+\item \textbf{Protect}: Review XDR solutions are monitoring systems to detect encryption and exfiltration attempts.
+\item \textbf{Detect}: Develop a Mockingjay red-team exercise against our XDR; work with our vendor to track and monitor the loading of specific
+  DLLs, including NTDLL.dll, by non-legitimate processes.
+\item \textbf{Respond}: Ensure that our organisation can report to all relevant authorities and abide by our legal
+  responsibilities for disclosures.
+\item \textbf{Recover}: Follow up with internal teams to show recovery procedures from backup are up to date and ensure backups are held for all systems and are immutable. 
 \end{itemize}
-
-
-
-

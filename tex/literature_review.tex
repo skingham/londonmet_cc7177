@@ -12,6 +12,7 @@
 \graphicspath{ {figures/} }
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{parskip}
+\usepackage{array}
 \usepackage{multirow}
 \usepackage{fontspec}
 \usepackage{fontawesome5}
@@ -267,7 +268,7 @@ This results in 4 possible HBCIA algorithm classes:
 
 
 \subsubsection{\textcite{Mitre:2017} Twelve Mitre injection techniques}
-\textbf{\citetitle{Mitre:2017}}: Adversaries may inject code into processes in order to evade process-based defenses as well as possibly elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process. 
+\textbf{\citetitle{Mitre:2017}}: Adversaries may inject code into processes in order to evade process-based defences as well as possibly elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process. 
 
 There are many different ways to inject code into a process, many of which abuse legitimate functionalities. These implementations exist for every major OS but are typically platform specific. 
 More sophisticated samples may perform multiple process injections to segment modules and further evade detection, utilizing named pipes or other inter-process communication (IPC) mechanisms as a communication channel. 
@@ -325,7 +326,7 @@ More sophisticated samples may perform multiple process injections to segment mo
   DS0022 & File & File Metadata & Monitor for contextual data about a file, which may include information such as name,
                                   the content (ex: signature, headers, or data/media), user/ower, permissions, etc. \\
         & & File Modification & Monitor for changes made to files that may inject code into processes in order to evade
-                                process-based defenses as well as possibly elevate privileges. \\
+                                process-based defences as well as possibly elevate privileges. \\
   \hline
   DS0011 & Module & Module Load & Monitor DLL/PE file events, specifically creation of these binary files as well as
                                   the loading of DLLs into processes. Look for DLLs that are not recognized or not
@@ -333,7 +334,7 @@ More sophisticated samples may perform multiple process injections to segment mo
   \hline
   DS0009 & Process & OS API Execution & Monitoring Windows API calls indicative of the various types of code injection
                                         may generate a significant amount of data and may not be directly useful for
-                                        defense unless collected under specific circumstances for known bad sequences
+                                        defence unless collected under specific circumstances for known bad sequences
                                         of calls, since benign use of API functions may be common and difficult to
                                         distinguish from malicious behavior. Windows API calls such as CreateRemoteThread,
                                         SuspendThread/SetThreadContext/ResumeThread, QueueUserAPC/NtQueueApcThread, and
@@ -343,11 +344,11 @@ More sophisticated samples may perform multiple process injections to segment mo
                                         amounts of data due to their specialized nature, and can be a very effective
                                         method to detect some of the common process injection methods.[80] [81] [82] [83] \\
         & & Process Access & Monitor for processes being viewed that may inject code into processes in order to
-                             evade process-based defenses as well as possibly elevate privileges. \\
+                             evade process-based defences as well as possibly elevate privileges. \\
         & & Process Metadata & Monitor for process memory inconsistencies, such as checking memory ranges against a
                                known copy of the legitimate module.[84] \\
         & & Process Modification & Monitor for changes made to processes that may inject code into processes in order
-                                   to evade process-based defenses as well as possibly elevate privileges. \\
+                                   to evade process-based defences as well as possibly elevate privileges. \\
   \hline
 \end{tabular}
 \label{table: Detection}
@@ -611,7 +612,7 @@ Special Techniques:
 This C++ code appears to be a Windows application that performs process injection using a specific shellcode into processes that have memory regions marked as PAGE\_EXECUTE\_READWRITE. Process injection is a technique used in various scenarios, including security research and, unfortunately, malicious activities.
 
 
-In summary, this paper discusses a more advanced targeted injection technique that aims to be stealthier by finding unpredictable RWX memory areas to inject shellcode and start execution from. The goal is to bypass defenses through unusual allocation and execution methods.
+In summary, this paper discusses a more advanced targeted injection technique that aims to be stealthier by finding unpredictable RWX memory areas to inject shellcode and start execution from. The goal is to bypass defences through unusual allocation and execution methods.
 
 Here is a summary of the process injection technique discussed in this paper:
 
@@ -624,7 +625,7 @@ Category:
 Advantages:
 \begin{itemize}
 \item Finds random RWX memory regions to inject code, making it stealthier and more unpredictable
-\item Bypasses some defenses that monitor common injection techniques
+\item Bypasses some defences that monitor common injection techniques
 \end{itemize}
 
 Bypass Techniques:
